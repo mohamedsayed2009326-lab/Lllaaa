@@ -1,0 +1,74 @@
+name: Build secure APK
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare project directory
+        run: |
+          if [ -f settings.gradle.kts ]; then
+            echo 'PROJ_DIR=.' >> "$GITHUB_ENV"
+          else
+            ZIP_FILE=$(find . -maxdepth 1 -type f -name '*.zip' | head -n 1)
+            test -n "$ZIP_FILE" || (echo 'Project files or a project ZIP were not found in repository root.' && exit 1)
+            mkdir -p _project
+            unzip -q -o "$ZIP_FILE" -d _project
+            SETTINGS=$(find _project -name settings.gradle.kts -type f | head -n 1)
+            test -n "$SETTINGS" || (echo 'settings.gradle.kts not found inside ZIP.' && exit 1)
+            echo "PROJ_DIR=$(dirname "$SETTINGS")" >> "$GITHUB_ENV"
+          fi
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+
+      - name: Check release signing secrets and prepare keystore
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          test -n "$ANDROID_KEYSTORE_BASE64" || (echo 'Missing GitHub Secret: ANDROID_KEYSTORE_BASE64' && exit 1)
+          test -n "$ANDROID_KEYSTORE_PASSWORD" || (echo 'Missing GitHub Secret: ANDROID_KEYSTORE_PASSWORD' && exit 1)
+          test -n "$ANDROID_KEY_ALIAS" || (echo 'Missing GitHub Secret: ANDROID_KEY_ALIAS' && exit 1)
+          test -n "$ANDROID_KEY_PASSWORD" || (echo 'Missing GitHub Secret: ANDROID_KEY_PASSWORD' && exit 1)
+          echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > "${PROJ_DIR}/app/release.keystore"
+          echo "ANDROID_KEYSTORE_PATH=$GITHUB_WORKSPACE/${PROJ_DIR}/app/release.keystore" >> "$GITHUB_ENV"
+
+      - name: Build signed Release APK
+        env:
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: gradle -p "$PROJ_DIR" :app:assembleRelease --no-daemon --stacktrace
+
+      - name: Collect APK
+        run: |
+          mkdir -p out
+          cp "${PROJ_DIR}/app/build/outputs/apk/release/app-release.apk" out/AbuAlSayed-secure.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: AbuAlSayed-secure-apk
+          path: out/AbuAlSayed-secure.apk
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: secure-${{ github.run_number }}
+          name: ابو السيد — إصدار آمن ${{ github.run_number }}
+          files: out/AbuAlSayed-secure.apk
