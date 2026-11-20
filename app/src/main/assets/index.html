@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#06100c">
+<title>ابو السيد</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#06100c;--card:#0c1a13;--card2:#12271c;--line:#1d3a2b;--tx:#e8f5ee;--mut:#8fb3a1;--g:#5eddaa;--gold:#e8b84a;--ongold:#1a1400;--red:#ff6b6b;--yel:#ffd24a;--shadow:rgba(0,0,0,.45)}
+[data-theme=light]{--bg:#f1f7f3;--card:#fff;--card2:#e6f2ea;--line:#cde2d5;--tx:#0d2318;--mut:#4f6f5f;--g:#0b8a5c;--gold:#c8961e;--ongold:#fff;--red:#c62828;--yel:#a37a00;--shadow:rgba(0,0,0,.2)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;overflow-x:hidden;background:var(--bg);color:var(--tx);font-family:'Cairo','Noto Sans Arabic','Noto Naskh Arabic',Tahoma,system-ui,sans-serif;font-size:15px}
+body{display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0)}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:var(--card2);border-radius:12px;padding:.55em .9em;color:var(--tx)}
+button:active{transform:scale(.97)}
+.hdr{display:flex;align-items:center;gap:6px;padding:8px 10px;border-bottom:1px solid var(--line);background:var(--card)}
+.hdr h1{flex:1;margin:0;font-size:1.05rem;font-weight:800;color:var(--g);text-align:center;letter-spacing:.02em}
+.ib{width:40px;height:40px;padding:0;font-size:1.15rem;position:relative}
+.badge{position:absolute;top:-3px;left:-3px;min-width:18px;height:18px;border-radius:9px;background:var(--yel);color:#1a1400;font-size:.7rem;font-weight:800;line-height:18px;text-align:center;padding:0 4px}
+main{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:10px}
+.tab{display:none}.tab.on{display:block}
+nav{display:flex;border-top:1px solid var(--line);background:var(--card)}
+nav button{flex:1;border-radius:0;background:none;padding:.7em .2em;color:var(--mut);font-weight:600}
+nav button.on{color:var(--gold);box-shadow:inset 0 3px 0 var(--gold)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;margin-bottom:10px}
+.row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.sp{flex:1}
+.pri{background:var(--g);color:#04170f;font-weight:800}
+.gold{background:var(--gold);color:var(--ongold);font-weight:800}
+.dng{background:var(--red);color:#fff}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--mut);display:inline-block}
+.dot.listening{background:var(--g);box-shadow:0 0 0 4px rgba(94,221,170,.25);animation:pl 1.2s infinite}
+.dot.connecting,.dot.reconnecting{background:var(--yel)}.dot.paused{background:var(--yel)}.dot.error{background:var(--red)}
+@keyframes pl{50%{box-shadow:0 0 0 8px rgba(94,221,170,0)}}
+.interim{min-height:2.6em;margin:8px 0 0;padding:8px 10px;background:var(--card2);border-radius:10px;color:var(--mut);overflow-wrap:anywhere;white-space:normal}
+.lvl{height:8px;background:var(--card2);border-radius:5px;overflow:hidden;flex:1;min-width:60px}.lvl i{display:block;height:100%;width:0;background:var(--g);transition:width .08s}
+.seg{display:flex;background:var(--card2);border-radius:12px;padding:3px;gap:3px}
+.seg button{flex:1;background:none;border-radius:9px;padding:.4em .6em;color:var(--mut);font-weight:600}
+.seg button.on{background:var(--gold);color:var(--ongold)}
+.resume{background:var(--yel);color:#1a1400;border:0;font-weight:800;display:none;width:100%;padding:14px;font-size:1.05rem;border-radius:14px;margin-bottom:10px}
+.resume.show{display:block}
+.tw{overflow-x:auto;overflow-y:hidden;border-radius:12px;border:1px solid var(--line);max-width:100%}
+table{border-collapse:collapse;width:100%;min-width:480px;font-size:1.05rem}
+th{background:var(--card2);color:var(--mut);font-weight:600;font-size:.9rem;padding:9px 8px;text-align:right;white-space:nowrap}
+td{padding:12px 8px;border-top:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere;word-break:break-word}
+td.n{color:var(--mut);font-size:.95rem;width:1%}
+.pl{display:inline-flex;gap:.55em;align-items:baseline;font-weight:800;font-size:1.45rem;cursor:pointer;padding:2px 0}
+.pl .l{white-space:pre}.pl .d{direction:ltr;unicode-bidi:isolate;letter-spacing:.06em;color:var(--g)}
+.sub{font-size:.84rem;color:var(--mut)}
+.mt{margin-top:3px;padding:4px 7px;border-radius:8px;background:rgba(255,210,74,.14);color:var(--yel);font-size:.9rem;line-height:1.6}
+td.st{text-align:center;font-size:1.6rem;font-weight:800;width:1%}.st.ok{color:var(--g)}.st.err{color:var(--red)}.st.req{color:var(--yel)}
+tr.req td{background:rgba(255,210,74,.07)}
+tr.newrow td{animation:fl 1.6s}@keyframes fl{from{background:rgba(94,221,170,.35)}}
+.x{background:none;color:var(--mut);padding:.35em .7em;font-size:1.25rem}
+a{color:var(--g)}
+.empty{text-align:center;color:var(--mut);padding:26px 10px}
+input[type=text],input[type=password],textarea{width:100%;background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:.7em .8em;outline:0}
+input:focus,textarea:focus{border-color:var(--g)}
+textarea{min-height:110px;resize:vertical}
+.big-in{display:flex;gap:8px}.big-in input{font-size:1.25rem;font-weight:700}.big-in button{width:56px;font-size:1.4rem}
+.stats{display:flex;gap:6px;flex-wrap:wrap}.stats span{background:var(--card2);border-radius:10px;padding:.35em .7em;font-size:.85rem}
+h3{margin:.2em 0 .5em;font-size:1rem;color:var(--g)}
+.hint{color:var(--mut);font-size:.8rem;line-height:1.6;margin:.3em 0}
+.mod{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:50;display:flex;align-items:flex-end;justify-content:center;padding-top:env(safe-area-inset-top,0)}
+.mod .box{background:var(--card);width:100%;max-width:560px;max-height:92vh;overflow-y:auto;border-radius:20px 20px 0 0;padding:14px;padding-bottom:calc(14px + env(safe-area-inset-bottom,0));border:1px solid var(--line)}
+.mod.alert{background:rgba(120,0,0,.78);align-items:center}.mod.alert .box{border-radius:20px;border:3px solid var(--red);margin:12px;text-align:center;width:calc(100% - 24px)}
+.alert h2{margin:.1em 0;color:var(--red);font-size:2rem;font-weight:800}
+.alert .pl{font-size:2rem;cursor:default}
+.kv{text-align:right;margin:10px 0;display:grid;grid-template-columns:auto 1fr;gap:4px 10px;background:var(--card2);padding:10px;border-radius:12px}.kv b{color:var(--yel)}
+.undo{position:fixed;left:8px;right:8px;bottom:calc(64px + env(safe-area-inset-bottom,0));z-index:40;background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:4px 10px;display:none;align-items:center;gap:8px;font-size:.85rem;box-shadow:0 4px 14px var(--shadow)}
+.undo.show{display:flex}.undo button{background:none;color:var(--gold);font-weight:800;padding:.2em .5em}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(80px + env(safe-area-inset-bottom,0));background:#000c;color:#fff;padding:.6em 1em;border-radius:20px;z-index:80;max-width:88%;text-align:center;display:none;font-size:.9rem}
+.bar{height:10px;background:var(--card2);border-radius:6px;overflow:hidden;margin:10px 0}.bar i{display:block;height:100%;width:0;background:var(--g)}
+.choice{display:block;width:100%;text-align:right;margin:6px 0;padding:10px}
+#authGate{position:fixed;inset:0;z-index:120;background:var(--bg);display:none;align-items:center;justify-content:center;padding:22px}#authGate.show{display:flex}#authGate .authbox{width:100%;max-width:440px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 12px 40px var(--shadow)}#authGate h2{color:var(--g);margin:0 0 8px}#authGate input{width:100%;margin:12px 0;font-size:1.15rem;letter-spacing:.08em;text-align:center}#authGate button{width:100%;padding:13px;font-weight:800}#authGate .phone{direction:ltr;text-align:center;color:var(--gold);font-weight:800;margin-top:12px}#splash{position:fixed;inset:0;z-index:100;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:opacity .5s}
+#splash.hide{opacity:0;pointer-events:none}#splash b{font-size:1.6rem;color:var(--g);font-weight:800}
+.mini{display:flex;gap:10px;align-items:center;padding:7px 4px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div id="authGate" aria-modal="true" role="dialog"><div class="authbox"><h2>تفعيل التطبيق</h2><p class="sub">أدخل رمز التفعيل المخصص لهذا الجهاز للمتابعة.</p><input id="activationCode" type="text" inputmode="text" maxlength="40" autocomplete="off" autocapitalize="characters" placeholder="رمز التفعيل"><button class="pri" id="activateBtn">تفعيل الدخول</button><p class="hint" id="authMessage" role="status"></p><div class="phone">للتواصل والتفعيل: 0554573839</div></div></div>
+<div id="splash"><svg width="96" height="96" viewBox="0 0 96 96" fill="none"><path d="M16 84V44a32 32 0 0 1 64 0v40H62V46a14 14 0 0 0-28 0v38z" fill="#5eddaa"/><circle cx="48" cy="66" r="6" fill="#e8b84a"/></svg><b>ابو السيد</b><span class="sub">التشييك الصوتي</span></div>
+<header class="hdr">
+  <button class="ib" id="btnTheme" aria-label="الثيم">🌙</button>
+  <button class="ib" id="btnSet" aria-label="الإعدادات">⚙</button>
+  <h1>ابو السيد</h1>
+  <button class="ib" id="btnWanted" aria-label="المطلوبة">⚠<span class="badge" id="wantedBadge" style="display:none">0</span></button>
+</header>
+<main>
+  <section class="tab on" id="tab-scan">
+    <button class="resume" id="btnResume">▶ استئناف الفحص الصوتي</button>
+    <div class="card">
+      <div class="row"><span class="dot" id="vDot"></span><b id="vState">متوقف</b><span class="sp"></span>
+        <button class="pri" id="btnStart">🎙 بدء</button><button class="dng" id="btnStop" style="display:none">⏹ إيقاف</button></div>
+      <div class="interim" id="vInterim">ابدأ الجلسة وقول اللوحات بصوتك…</div>
+      <details style="margin-top:6px"><summary class="sub">النص الخام اللي اتسمع (للتشخيص)</summary><div id="vRaw" class="sub" style="white-space:pre-wrap;overflow-wrap:anywhere;margin-top:4px"></div></details>
+      <div class="row" style="margin-top:8px"><div class="lvl"><i id="vLvl"></i></div><span class="sub" id="vPct" style="min-width:34px">0%</span><span class="sub" id="vSig">الإشارة: —</span></div>
+      <div class="row" style="margin-top:10px"><div class="seg sp" id="modeSeg"><button data-mode="abu" class="on">تشييك ابو صبره</button><button data-mode="ext">خارجي</button></div>
+        <button id="btnLoc">📍 الموقع</button></div>
+    </div>
+    <div class="tw"><table><thead><tr><th>#</th><th>اللوحة</th><th>النوع</th><th>الموقع</th><th>الحالة</th><th></th></tr></thead><tbody id="tbScan"></tbody></table></div>
+  </section>
+  <section class="tab" id="tab-manual">
+    <div class="card"><h3>فحص يدوي</h3>
+      <div class="big-in"><input type="text" id="manIn" enterkeyhint="send" autocomplete="off" placeholder="رحم3249 أو ر ح م 324 أو مع النوع"><button class="pri" id="manGo">➤</button></div>
+      <p class="hint">اكتب اللوحة كاملة (ممكن مع النوع زي: رحم3249 ملاكي) وضغطة السهم في الكيبورد بتضيفها.</p></div>
+    <div class="card"><h3>آخر 5 لوحات</h3><div id="lastFive"></div></div>
+  </section>
+  <section class="tab" id="tab-all">
+    <div class="card"><div class="stats" id="allStats"></div>
+      <div class="row" style="margin-top:10px"><button class="pri" id="btnExport">📤 تصدير</button><button class="dng" id="btnClear">🗑 مسح الكل</button></div></div>
+    <div class="tw"><table><thead><tr><th>#</th><th>اللوحة</th><th>النوع</th><th>الموقع</th><th>الحالة</th><th></th></tr></thead><tbody id="tbAll"></tbody></table></div>
+    <button id="btnMore" style="display:none;width:100%;margin-top:8px">عرض المزيد</button>
+  </section>
+</main>
+<div class="undo" id="undo"><span class="sp" id="undoTx">اتمسحت</span><button id="undoBtn">تراجع</button></div>
+<nav id="nav"><button data-tab="all">الكل</button><button data-tab="scan" class="on">الفحص</button><button data-tab="manual">فحص يدوي</button></nav>
+<div class="toast" id="toast"></div>
+<div id="modals"></div>
+<input type="file" id="fileIn" accept=".xlsx,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display:none">
+<script>
+/*CORE_START*/
+'use strict';
+/* ===== ثوابت وتوحيد النصوص ===== */
+const LETTERS = 'ابجحدرسصطعفقكلمنهوي';
+function normText(s) {
+  s = String(s == null ? '' : s);
+  s = s.replace(/[\u0660-\u0669]/g, c => String(c.charCodeAt(0) - 0x660));
+  s = s.replace(/[\u06F0-\u06F9]/g, c => String(c.charCodeAt(0) - 0x6F0));
+  s = s.replace(/[\u064B-\u065F\u0670\u0640\u200c\u200d\u200e\u200f\u061c]/g, '');
+  s = s.replace(/[أإآٱ]/g, 'ا').replace(/[ىی]/g, 'ي').replace(/[ھہ]/g, 'ه').replace(/ک/g, 'ك');
+  s = s.replace(/\u066B/g, '.').replace(/[\u060C\u066C]/g, ',');
+  return s;
+}
+const LETTER_NAMES = {
+  'الف': 'ا', 'باء': 'ب', 'با': 'ب', 'جيم': 'ج', 'حاء': 'ح', 'دال': 'د', 'راء': 'ر', 'را': 'ر',
+  'سين': 'س', 'صاد': 'ص', 'طاء': 'ط', 'عين': 'ع', 'قاف': 'ق', 'كاف': 'ك', 'لام': 'ل', 'ميم': 'م',
+  'نون': 'ن', 'هاء': 'ه', 'واو': 'و', 'ياء': 'ي', 'فاء': 'ف'
+};
+const DIGIT_WORDS = {
+  'صفر': 0, 'زيرو': 0, 'واحد': 1, 'واحده': 1, 'واحدة': 1, 'اتنين': 2, 'اثنين': 2, 'اثنان': 2, 'اتنان': 2, 'تنين': 2,
+  'تلاته': 3, 'تلاتة': 3, 'ثلاثه': 3, 'ثلاثة': 3, 'تلات': 3, 'اربعه': 4, 'اربعة': 4, 'خمسه': 5, 'خمسة': 5,
+  'سته': 6, 'ستة': 6, 'سبعه': 7, 'سبعة': 7, 'تمانيه': 8, 'تمانية': 8, 'ثمانيه': 8, 'ثمانية': 8, 'تمنية': 8,
+  'تسعه': 9, 'تسعة': 9
+};
+const TYPES = {
+  'ملاكي': 'ملاكي', 'نقل': 'نقل', 'مركونه': 'مركونة', 'مركونة': 'مركونة', 'ونيت': 'ونيت', 'وانيت': 'ونيت',
+  'تاكسي': 'تاكسي', 'ميكروباص': 'ميكروباص', 'ميكروبص': 'ميكروباص', 'هايلوكس': 'هاي لوكس', 'هيلوكس': 'هاي لوكس',
+  'هايس': 'هاي اس'
+};
+const HAI2 = { 'لوكس': 'هاي لوكس', 'لكس': 'هاي لوكس', 'اس': 'هاي اس', 'ايس': 'هاي اس', 'س': 'هاي اس' };
+const STOP = new Set(['من', 'عن', 'في', 'لا', 'ما', 'يا', 'او', 'ان', 'لو', 'بس', 'كل', 'مع', 'على', 'علي', 'هو', 'هي', 'ده', 'دي', 'دا', 'ود', 'يعني', 'اه', 'ايه', 'ايوه']);
+const TYPE_LIST = ['ملاكي', 'نقل', 'هاي لوكس', 'هاي اس', 'مركونة', 'ونيت', 'تاكسي', 'ميكروباص'];
+const VOCAB = ['ألف', 'باء', 'جيم', 'حاء', 'دال', 'راء', 'سين', 'صاد', 'طاء', 'عين', 'قاف', 'كاف', 'لام', 'ميم', 'نون', 'هاء', 'واو', 'ياء'].concat(TYPE_LIST);
+
+/* ===== مفتاح اللوحة (للمطابقة مع الملف) ===== */
+function normalizePlateKey(s) {
+  const n = normText(s);
+  if (!n || n.length > 24 || /[A-Za-z]/.test(n)) return null;
+  const letters = (n.match(/[\u0621-\u064A]/g) || []).join('');
+  const digits = (n.match(/[0-9]/g) || []).join('');
+  if (letters.length < 2 || letters.length > 4 || digits.length < 1 || digits.length > 4) return null;
+  return letters + digits.padStart(4, '0');
+}
+function looksLikePlate(s) { return s != null && normalizePlateKey(s) !== null; }
+
+/* ===== محلل الكلام → لوحة (بيحتفظ بحالة بين الشظايا) ===== */
+function createParser(opts) {
+  const o = Object.assign({ typeWindow: 8000, silence: 1500, lettersTimeout: 4000, onPlate: null, onType: null }, opts || {});
+  const st = { letters: '', digits: '', hai: false, lastFeed: 0, last: null };
+  const pad = d => (d.length >= 1 && d.length < 4) ? d.padStart(4, '0') : d;
+  function finalize(t) {
+    if (!st.letters && st.digits.length < 4) { st.digits = ''; return null; } // أرقام يتيمة = ضوضاء
+    const digits = pad(st.digits);
+    const ok = st.letters.length === 3 && digits.length === 4;
+    const p = { letters: st.letters, digits, plate: st.letters + digits, type: '', status: ok ? 'ok' : 'err', ts: t };
+    st.letters = ''; st.digits = ''; st.last = p;
+    if (o.onPlate) o.onPlate(p);
+    return p;
+  }
+  function setTypeOn(p, type) { if (!p) return; p.type = type; if (o.onType) o.onType(p); }
+  function addLetter(c, t) {
+    if (st.digits.length > 0) finalize(t);
+    st.letters += c;
+    if (st.letters.length > 3) st.letters = st.letters.slice(-3);
+  }
+  function addDigits(d) {
+    st.digits += d;
+    if (st.digits.length >= 4) { st.digits = st.digits.slice(0, 4); finalize(st.lastFeed); }
+  }
+  function typeWord(type, t) {
+    if (st.letters && st.digits.length > 0) { setTypeOn(finalize(t), type); return; }
+    if (st.letters) {
+      if (type === 'نقل') { for (const c of 'نقل') addLetter(c, t); return; }
+      setTypeOn(finalize(t), type); return;
+    }
+    if (st.last && !st.last.type && t - st.last.ts <= o.typeWindow) { setTypeOn(st.last, type); return; }
+    if (type === 'نقل') for (const c of 'نقل') addLetter(c, t);
+  }
+  function handle(tok, t) {
+    if (/^[0-9]+$/.test(tok)) { addDigits(tok); return; }
+    if (st.hai) { st.hai = false; if (HAI2[tok]) { typeWord(HAI2[tok], t); return; } }
+    if (tok === 'هاي') { st.hai = true; return; }
+    if (TYPES[tok]) { typeWord(TYPES[tok], t); return; }
+    if (LETTER_NAMES[tok]) { addLetter(LETTER_NAMES[tok], t); return; }
+    if (DIGIT_WORDS[tok] !== undefined) { addDigits(String(DIGIT_WORDS[tok])); return; }
+    if (tok.length === 1 && LETTERS.includes(tok)) { addLetter(tok, t); return; }
+    if (tok.length >= 2 && tok.length <= 3 && !STOP.has(tok) && [...tok].every(c => LETTERS.includes(c))) {
+      for (const c of tok) addLetter(c, t); return;
+    }
+    /* غير ذلك: كلام عادي يتجاهل */
+  }
+  return {
+    feed(text, t) {
+      st.lastFeed = t;
+      const toks = normText(text).match(/[0-9]+|[\u0621-\u064A]+/g) || [];
+      for (const tok of toks) handle(tok, t);
+    },
+    tick(t) {
+      if (!st.letters && !st.digits) return;
+      const idle = t - st.lastFeed;
+      if (st.digits.length > 0 && idle >= o.silence) finalize(t);
+      else if (st.digits.length === 0 && st.letters && idle >= o.lettersTimeout) finalize(t);
+    },
+    turnComplete(t) { if (st.letters || st.digits) finalize(t); },
+    reset() { st.letters = ''; st.digits = ''; st.hai = false; st.last = null; },
+    pending() { return { letters: st.letters, digits: st.digits }; }
+  };
+}
+/* تحليل نص مكتوب/ملصوق بنفس القواعد: بيرجّع كل اللوحات */
+function parseManual(text, now) {
+  const t = now == null ? Date.now() : now;
+  const res = [];
+  const p = createParser({ onPlate: x => res.push(x) });
+  p.feed(text, t); p.turnComplete(t);
+  return res;
+}
+
+
+/* لوحات ظهرت في النص المبدئي ومش موجودة في النهائي.
+   بترجع الزيادة بس لو كل لوحات النهائي مؤكدة جوه المبدئي (عشان منسجّلش تخمين غلط) */
+function missingFromInterim(interimText, finalText) {
+  const okOnly = t => parseManual(t, 0).filter(p => p.status === 'ok');
+  const I = okOnly(interimText), F = okOnly(finalText);
+  if (I.length <= F.length) return [];
+  const pool = I.slice(), extras = [];
+  for (const f of F) { const i = pool.findIndex(x => x.plate === f.plate); if (i < 0) return []; pool.splice(i, 1); }
+  return pool;
+}
+
+/* ===== المناطق (مربعات) ===== */
+function makeZone(name, pts) {
+  const cy = pts.reduce((a, p) => a + p[0], 0) / pts.length, cx = pts.reduce((a, p) => a + p[1], 0) / pts.length; // cy=lat, cx=lng
+  const ord = pts.slice().sort((a, b) => Math.atan2(a[0] - cy, a[1] - cx) - Math.atan2(b[0] - cy, b[1] - cx));
+  const lats = ord.map(p => p[0]), lngs = ord.map(p => p[1]);
+  let a = 0;
+  for (let i = 0; i < ord.length; i++) { const j = (i + 1) % ord.length; a += ord[i][1] * ord[j][0] - ord[j][1] * ord[i][0]; }
+  return { name, pts: ord, bbox: [Math.min(...lats), Math.min(...lngs), Math.max(...lats), Math.max(...lngs)], area: Math.abs(a) / 2 };
+}
+function parseZones(text) {
+  const zones = [], errors = [];
+  const blocks = normText(text).replace(/\r/g, '').split(/\n\s*\n/);
+  for (const b of blocks) {
+    const lines = b.split('\n').map(x => x.trim()).filter(Boolean);
+    if (!lines.length) continue;
+    const name = lines[0], pts = [];
+    for (const ln of lines.slice(1)) {
+      const nums = ln.match(/-?\d+(?:\.\d+)?/g);
+      if (nums && nums.length >= 2) {
+        const lat = parseFloat(nums[0]), lng = parseFloat(nums[1]);
+        if (Math.abs(lat) <= 90 && Math.abs(lng) <= 180) pts.push([lat, lng]);
+      }
+    }
+    if (pts.length !== 4) { errors.push(`"${name}": محتاج 4 إحداثيات (لقيت ${pts.length})`); continue; }
+    zones.push(makeZone(name, pts));
+  }
+  return { zones, errors };
+}
+function pointInZone(z, lat, lng) {
+  const b = z.bbox;
+  if (lat < b[0] || lat > b[2] || lng < b[1] || lng > b[3]) return false;
+  let inside = false;
+  const p = z.pts;
+  for (let i = 0, j = p.length - 1; i < p.length; j = i++) {
+    const yi = p[i][0], xi = p[i][1], yj = p[j][0], xj = p[j][1];
+    if (((yi > lat) !== (yj > lat)) && (lng < (xj - xi) * (lat - yi) / (yj - yi) + xi)) inside = !inside;
+  }
+  return inside;
+}
+function zoneFor(zones, lat, lng) {
+  let best = null;
+  for (const z of zones) if (pointInZone(z, lat, lng) && (!best || z.area < best.area)) best = z;
+  return best ? best.name : null;
+}
+function mergeZones(oldList, newList) {
+  const out = oldList.slice();
+  for (const z of newList) { const i = out.findIndex(x => x.name === z.name); if (i >= 0) out[i] = z; else out.push(z); }
+  return out;
+}
+
+/* ===== ZIP (كتابة بدون ضغط) ===== */
+const CRC_T = (() => { const t = new Uint32Array(256); for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+function crc32(u8) { let c = 0xFFFFFFFF; for (let i = 0; i < u8.length; i++) c = CRC_T[(c ^ u8[i]) & 255] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; }
+function zipStore(files) {
+  const enc = new TextEncoder(), chunks = [], central = [];
+  let offset = 0;
+  for (const f of files) {
+    const nm = enc.encode(f.name), crc = crc32(f.data), sz = f.data.length;
+    const lh = new Uint8Array(30 + nm.length), dv = new DataView(lh.buffer);
+    dv.setUint32(0, 0x04034b50, true); dv.setUint16(4, 20, true); dv.setUint16(6, 0x0800, true); dv.setUint16(8, 0, true);
+    dv.setUint16(10, 0, true); dv.setUint16(12, 33, true); dv.setUint32(14, crc, true); dv.setUint32(18, sz, true);
+    dv.setUint32(22, sz, true); dv.setUint16(26, nm.length, true); dv.setUint16(28, 0, true); lh.set(nm, 30);
+    const ch = new Uint8Array(46 + nm.length), cv = new DataView(ch.buffer);
+    cv.setUint32(0, 0x02014b50, true); cv.setUint16(4, 20, true); cv.setUint16(6, 20, true); cv.setUint16(8, 0x0800, true);
+    cv.setUint16(10, 0, true); cv.setUint16(12, 0, true); cv.setUint16(14, 33, true); cv.setUint32(16, crc, true);
+    cv.setUint32(20, sz, true); cv.setUint32(24, sz, true); cv.setUint16(28, nm.length, true); cv.setUint32(42, offset, true); ch.set(nm, 46);
+    chunks.push(lh, f.data); central.push(ch); offset += lh.length + sz;
+  }
+  const cdSize = central.reduce((a, c) => a + c.length, 0);
+  const end = new Uint8Array(22), ev = new DataView(end.buffer);
+  ev.setUint32(0, 0x06054b50, true); ev.setUint16(8, files.length, true); ev.setUint16(10, files.length, true);
+  ev.setUint32(12, cdSize, true); ev.setUint32(16, offset, true);
+  const all = chunks.concat(central, [end]);
+  const out = new Uint8Array(offset + cdSize + 22);
+  let p = 0; for (const c of all) { out.set(c, p); p += c.length; }
+  return out;
+}
+
+/* ===== كتابة xlsx (RTL، نصوص inline، HYPERLINK) ===== */
+function xmlEsc(s) { return String(s == null ? '' : s).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+function colName(i) { let s = ''; i++; while (i > 0) { const m = (i - 1) % 26; s = String.fromCharCode(65 + m) + s; i = Math.floor((i - 1) / 26); } return s; }
+/* cell: string | number | {link:url, text:name} */
+function buildXlsx(headers, rows, widths) {
+  const enc = new TextEncoder();
+  let sd = '<row r="1">' + headers.map((h, i) => `<c r="${colName(i)}1" t="inlineStr" s="1"><is><t>${xmlEsc(h)}</t></is></c>`).join('') + '</row>';
+  rows.forEach((row, ri) => {
+    const r = ri + 2;
+    sd += `<row r="${r}">` + row.map((v, ci) => {
+      const ref = colName(ci) + r;
+      if (v && typeof v === 'object' && v.link) {
+        const url = String(v.link).replace(/"/g, '""'), txt = String(v.text).replace(/"/g, '""');
+        const f = `HYPERLINK("${url}","${txt}")`;
+        if (url.length + txt.length + 14 > 250 || f.length > 250) return `<c r="${ref}" t="inlineStr"><is><t xml:space="preserve">${xmlEsc(v.text)}</t></is></c>`;
+        return `<c r="${ref}" t="str" s="2"><f>${xmlEsc(f)}</f><v>${xmlEsc(v.text)}</v></c>`;
+      }
+      if (typeof v === 'number') return `<c r="${ref}"><v>${v}</v></c>`;
+      return `<c r="${ref}" t="inlineStr"><is><t xml:space="preserve">${xmlEsc(v)}</t></is></c>`;
+    }).join('') + '</row>';
+  });
+  const cols = '<cols>' + headers.map((h, i) => `<col min="${i + 1}" max="${i + 1}" width="${(widths && widths[i]) || 16}" customWidth="1"/>`).join('') + '</cols>';
+  const sheet = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetViews><sheetView rightToLeft="1" workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews>${cols}<sheetData>${sd}</sheetData></worksheet>`;
+  const styles = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><fonts count="3"><font><sz val="11"/><name val="Calibri"/></font><font><b/><sz val="11"/><name val="Calibri"/></font><font><u/><sz val="11"/><color rgb="FF0563C1"/><name val="Calibri"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFD9EAD3"/><bgColor indexed="64"/></patternFill></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="3"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0" applyFont="1" applyFill="1"/><xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0" applyFont="1"/></cellXfs></styleSheet>`;
+  const files = [
+    ['[Content_Types].xml', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>'],
+    ['_rels/.rels', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>'],
+    ['xl/workbook.xml', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="السجل" sheetId="1" r:id="rId1"/></sheets></workbook>'],
+    ['xl/_rels/workbook.xml.rels', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>'],
+    ['xl/styles.xml', styles],
+    ['xl/worksheets/sheet1.xml', sheet]
+  ];
+  return zipStore(files.map(f => ({ name: f[0], data: enc.encode(f[1]) })));
+}
+
+/* ===== قراءة ZIP/XLSX تدفقياً ===== */
+async function readU(blob, start, len) { return new Uint8Array(await blob.slice(start, start + len).arrayBuffer()); }
+async function zipEntries(blob) {
+  const size = blob.size;
+  if (size < 22) throw new Error('الملف مش xlsx (صغير جداً)');
+  const tailLen = Math.min(size, 65557);
+  const tail = await readU(blob, size - tailLen, tailLen), dv = new DataView(tail.buffer);
+  let i = tail.length - 22;
+  for (; i >= 0; i--) if (dv.getUint32(i, true) === 0x06054b50) break;
+  if (i < 0) throw new Error('الملف مش xlsx صحيح (مفيش فهرس zip)');
+  const cdSize = dv.getUint32(i + 12, true), cdOff = dv.getUint32(i + 16, true);
+  if (cdOff === 0xFFFFFFFF) throw new Error('ملف zip64 مش مدعوم');
+  const cd = await readU(blob, cdOff, cdSize), cv = new DataView(cd.buffer), dec = new TextDecoder();
+  const map = {};
+  let p = 0;
+  while (p + 46 <= cd.length && cv.getUint32(p, true) === 0x02014b50) {
+    const method = cv.getUint16(p + 10, true), csize = cv.getUint32(p + 20, true), usize = cv.getUint32(p + 24, true);
+    const nl = cv.getUint16(p + 28, true), el = cv.getUint16(p + 30, true), cl = cv.getUint16(p + 32, true), lho = cv.getUint32(p + 42, true);
+    map[dec.decode(cd.subarray(p + 46, p + 46 + nl))] = { method, csize, usize, lho };
+    p += 46 + nl + el + cl;
+  }
+  return map;
+}
+async function entryTextStream(blob, e) {
+  const lh = await readU(blob, e.lho, 30), lv = new DataView(lh.buffer);
+  const start = e.lho + 30 + lv.getUint16(26, true) + lv.getUint16(28, true);
+  let s = blob.slice(start, start + e.csize).stream();
+  if (e.method === 8) s = s.pipeThrough(new DecompressionStream('deflate-raw'));
+  else if (e.method !== 0) throw new Error('نوع ضغط مش مدعوم في xlsx');
+  return s.pipeThrough(new TextDecoderStream('utf-8'));
+}
+async function* textChunks(stream) {
+  const r = stream.getReader();
+  try { for (;;) { const { done, value } = await r.read(); if (done) return; if (value) yield value; } } finally { try { r.releaseLock(); } catch (e) { } }
+}
+async function entryText(blob, e) { let s = ''; for await (const c of textChunks(await entryTextStream(blob, e))) s += c; return s; }
+function xmlUnesc(s) {
+  return s.indexOf('&') < 0 ? s : s.replace(/&(#x[0-9a-fA-F]+|#\d+|amp|lt|gt|quot|apos);/g, (m, g) => {
+    if (g[0] === '#') { const n = g[1] === 'x' ? parseInt(g.slice(2), 16) : parseInt(g.slice(1), 10); try { return String.fromCodePoint(n); } catch (e) { return ''; } }
+    return { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'" }[g];
+  });
+}
+function siText(inner) {
+  inner = inner.replace(/<rPh\b[\s\S]*?<\/rPh>/g, '');
+  let out = '', m; const re = /<t(?:\s[^>]*)?>([\s\S]*?)<\/t>/g;
+  while ((m = re.exec(inner))) out += m[1];
+  return xmlUnesc(out);
+}
+async function readSharedStrings(blob, entries) {
+  const e = entries['xl/sharedStrings.xml'];
+  if (!e) return [];
+  const arr = []; let buf = '';
+  for await (const chunk of textChunks(await entryTextStream(blob, e))) {
+    buf += chunk; let pos = 0;
+    for (;;) {
+      const re = /<si(?:\s[^>]*)?(\/?)>/g; re.lastIndex = pos;
+      const m = re.exec(buf); if (!m) break;
+      if (m[1] === '/') { arr.push(''); pos = m.index + m[0].length; continue; }
+      const end = buf.indexOf('</si>', m.index + m[0].length);
+      if (end < 0) { pos = m.index; break; }
+      arr.push(siText(buf.slice(m.index + m[0].length, end))); pos = end + 5;
+    }
+    buf = buf.slice(pos);
+  }
+  return arr;
+}
+async function findSheetPath(blob, entries) {
+  try {
+    const wb = await entryText(blob, entries['xl/workbook.xml']);
+    const rels = await entryText(blob, entries['xl/_rels/workbook.xml.rels']);
+    const m = /<sheet\b[^>]*?\br:id="([^"]+)"/.exec(wb);
+    if (m) {
+      for (const tag of rels.match(/<Relationship\b[^>]*>/g) || []) {
+        if (new RegExp('\\bId="' + m[1] + '"').test(tag)) {
+          const t = /\bTarget="([^"]+)"/.exec(tag);
+          if (t) { const path = t[1][0] === '/' ? t[1].slice(1) : 'xl/' + t[1].replace(/^\.\//, ''); if (entries[path]) return path; }
+        }
+      }
+    }
+  } catch (e) { }
+  if (entries['xl/worksheets/sheet1.xml']) return 'xl/worksheets/sheet1.xml';
+  const k = Object.keys(entries).filter(x => /^xl\/worksheets\/[^/]+\.xml$/.test(x)).sort()[0];
+  if (!k) throw new Error('مفيش شيت جوه الملف');
+  return k;
+}
+function colIndex(letters) { let n = 0; for (const c of letters) n = n * 26 + (c.charCodeAt(0) - 64); return n - 1; }
+function parseCells(inner, sst) {
+  const vals = []; const re = /<c\b([^>]*?)(?:\/>|>([\s\S]*?)<\/c>)/g; let m;
+  while ((m = re.exec(inner))) {
+    if (m[2] === undefined) continue;
+    const a = m[1], ref = /\br="([A-Z]+)\d*"/.exec(a); if (!ref) continue;
+    const t = /\bt="(\w+)"/.exec(a), tp = t ? t[1] : 'n';
+    let v;
+    if (tp === 'inlineStr') v = siText(m[2]);
+    else { const vm = /<v>([\s\S]*?)<\/v>/.exec(m[2]); if (!vm) continue; v = tp === 's' ? (sst[parseInt(vm[1], 10)] || '') : xmlUnesc(vm[1]); }
+    vals[colIndex(ref[1])] = v;
+  }
+  return vals;
+}
+async function streamXlsxRows(blob, entries, sheetPath, sst, onRow) {
+  let buf = '';
+  for await (const chunk of textChunks(await entryTextStream(blob, entries[sheetPath]))) {
+    buf += chunk; let pos = 0;
+    for (;;) {
+      const re = /<row(?=[\s>\/])/g; re.lastIndex = pos;
+      const rm = re.exec(buf); if (!rm) { pos = Math.max(pos, buf.length - 5); break; }
+      const gt = buf.indexOf('>', rm.index); if (gt < 0) { pos = rm.index; break; }
+      if (buf[gt - 1] === '/') { pos = gt + 1; continue; }
+      const end = buf.indexOf('</row>', gt); if (end < 0) { pos = rm.index; break; }
+      const rn = /\sr="(\d+)"/.exec(buf.slice(rm.index, gt));
+      const cells = parseCells(buf.slice(gt + 1, end), sst);
+      pos = end + 6;
+      if (cells.length) { let r = onRow(rn ? parseInt(rn[1], 10) : 0, cells); if (r && r.then) r = await r; if (r === false) return; }
+    }
+    buf = buf.slice(pos);
+  }
+}
+
+/* ===== CSV ===== */
+function parseCsvLine(line, d) {
+  const out = []; let cur = '', q = false;
+  for (let i = 0; i < line.length; i++) {
+    const c = line[i];
+    if (q) { if (c === '"') { if (line[i + 1] === '"') { cur += '"'; i++; } else q = false; } else cur += c; }
+    else if (c === '"') q = true; else if (c === d) { out.push(cur); cur = ''; } else cur += c;
+  }
+  out.push(cur); return out;
+}
+async function csvRows(file, onRow) {
+  let enc = 'utf-8';
+  try { new TextDecoder('utf-8', { fatal: true }).decode(await readU(file, 0, Math.min(file.size, 65536)), { stream: true }); } catch (e) { enc = 'windows-1256'; }
+  const stream = file.stream().pipeThrough(new TextDecoderStream(enc));
+  let carry = '', n = 0, delim = null;
+  const emit = async line => {
+    n++;
+    if (!delim) { const c = [',', ';', '\t'].map(d => [d, line.split(d).length]); c.sort((a, b) => b[1] - a[1]); delim = c[0][0]; }
+    if (!line.trim()) return true;
+    const cells = parseCsvLine(line, delim);
+    let r = onRow(n, cells); if (r && r.then) r = await r;
+    return r !== false;
+  };
+  for await (let chunk of textChunks(stream)) {
+    if (n === 0 && !carry && chunk.charCodeAt(0) === 0xFEFF) chunk = chunk.slice(1);
+    carry += chunk;
+    const parts = carry.split('\n'); carry = parts.pop();
+    let pending = '';
+    for (const part of parts) {
+      pending += (pending ? '\n' : '') + part.replace(/\r$/, '');
+      if ((pending.match(/"/g) || []).length % 2) continue;
+      if (!(await emit(pending))) return;
+      pending = '';
+    }
+    carry = pending ? pending + '\n' + carry : carry;
+  }
+  if (carry.trim()) await emit(carry.replace(/\r$/, ''));
+}
+
+/* ===== استيراد ملف المطابقة ===== */
+const nonEmpty = c => c !== undefined && c !== null && String(c).trim() !== '';
+function detectPlateColumn(sample) {
+  const maxCol = Math.max(0, ...sample.map(r => r.cells.length)) ;
+  const ratio = col => { let ne = 0, pl = 0; for (const r of sample) { const v = r.cells[col]; if (nonEmpty(v)) { ne++; if (looksLikePlate(v)) pl++; } } return { ne, pl }; };
+  const mkHeaders = (row, width) => { const h = []; for (let i = 0; i < width; i++) h.push(row && nonEmpty(row.cells[i]) ? String(row.cells[i]).trim() : 'عمود ' + (i + 1)); return h; };
+  const width = maxCol;
+  for (const r of sample.slice(0, 40)) {
+    for (let i = 0; i < r.cells.length; i++) {
+      const v = r.cells[i]; if (!nonEmpty(v)) continue;
+      const s = normText(v).toLowerCase().trim();
+      if (s.length <= 20 && (s.includes('لوح') || s.includes('plate'))) {
+        const after = sample.filter(x => x.n > r.n), rt = (() => { let ne = 0, pl = 0; for (const x of after) { const y = x.cells[i]; if (nonEmpty(y)) { ne++; if (looksLikePlate(y)) pl++; } } return { ne, pl }; })();
+        if (rt.ne > 0 && rt.pl / rt.ne >= 0.3) return { col: i, headerRow: r.n, headers: mkHeaders(r, width) };
+      }
+    }
+  }
+  let best = null;
+  for (let i = 0; i < width; i++) { const q = ratio(i); if (q.ne >= 1 && q.pl / q.ne > 0.5 && (!best || q.pl > best.pl)) best = { col: i, pl: q.pl }; }
+  if (!best) return null;
+  return guessForCol(sample, best.col);
+}
+function guessForCol(sample, col) {
+  const width = Math.max(1, ...sample.map(r => r.cells.length));
+  const first = sample.find(r => looksLikePlate(r.cells[col]));
+  let hdr = null;
+  for (const r of sample) {
+    if (first && r.n >= first.n) break;
+    if (r.cells.filter(nonEmpty).length >= 2 && !looksLikePlate(r.cells[col])) hdr = r;
+  }
+  const headers = []; for (let i = 0; i < width; i++) headers.push(hdr && nonEmpty(hdr.cells[i]) ? String(hdr.cells[i]).trim() : 'عمود ' + (i + 1));
+  return { col, headerRow: hdr ? hdr.n : 0, headers };
+}
+function describeColumns(sample) {
+  const width = Math.max(0, ...sample.map(r => r.cells.length)), cols = [];
+  for (let i = 0; i < width; i++) {
+    const ex = []; for (const r of sample) { if (nonEmpty(r.cells[i])) ex.push(String(r.cells[i]).trim().slice(0, 30)); if (ex.length >= 3) break; }
+    if (ex.length) cols.push({ idx: i, samples: ex });
+  }
+  return cols;
+}
+async function makeRowIterator(file) {
+  const head = await readU(file, 0, 4);
+  if (head[0] === 0x50 && head[1] === 0x4B) {
+    const entries = await zipEntries(file);
+    if (!entries['xl/workbook.xml']) throw new Error('الملف zip لكن مش xlsx');
+    const sst = await readSharedStrings(file, entries), sheet = await findSheetPath(file, entries);
+    return onRow => streamXlsxRows(file, entries, sheet, sst, onRow);
+  }
+  if (head[0] === 0xD0 && head[1] === 0xCF) throw new Error('الملف xls قديم — افتحه واحفظه بصيغة xlsx أو csv');
+  if (/\.(xlsx?|xlsm)$/i.test(file.name || '')) throw new Error('الملف مش xlsx صحيح');
+  return onRow => csvRows(file, onRow);
+}
+/* sink = { begin(headers, plateCol), putBatch([{k,r}]), finish(meta) } */
+async function importMatchFile(file, sink, opts) {
+  opts = opts || {};
+  const onProgress = opts.onProgress || (() => { });
+  const iter = await makeRowIterator(file);
+  const sample = [];
+  await iter((n, cells) => { if (cells.some(nonEmpty)) sample.push({ n, cells }); return sample.length < 400; });
+  const det = opts.col != null ? guessForCol(sample, opts.col) : detectPlateColumn(sample);
+  if (!det) { const e = new Error('NEED_COLUMN'); e.needColumn = true; e.columns = describeColumns(sample); throw e; }
+  await sink.begin(det.headers, det.col);
+  let batch = [], count = 0, skipped = 0, scanned = 0;
+  const W = det.headers.length;
+  await iter(async (n, cells) => {
+    scanned++;
+    if (n > det.headerRow) {
+      const key = normalizePlateKey(cells[det.col]);
+      if (key) {
+        const r = new Array(W); for (let i = 0; i < W; i++) r[i] = nonEmpty(cells[i]) ? String(cells[i]).trim() : '';
+        batch.push({ k: key, r }); count++;
+        if (batch.length >= 5000) { const b = batch; batch = []; await sink.putBatch(b); }
+      } else if (cells.some(nonEmpty)) skipped++;
+    }
+    if (scanned % 20000 === 0) { onProgress({ rows: scanned, plates: count }); await new Promise(r => setTimeout(r, 0)); }
+  });
+  if (batch.length) await sink.putBatch(batch);
+  const meta = { name: file.name || 'file', count, skipped, headers: det.headers, plateCol: det.col };
+  await sink.finish(meta);
+  onProgress({ rows: scanned, plates: count, done: true });
+  return meta;
+}
+function matchPairs(headers, r, plateCol) {
+  const out = [];
+  for (let i = 0; i < r.length; i++) if (i !== plateCol && r[i] !== '' && r[i] != null) out.push([headers[i] || ('عمود ' + (i + 1)), r[i]]);
+  return out;
+}
+/*CORE_END*/
+</script>
+<script>
+/* ================= التطبيق ================= */
+'use strict';
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const LS = {
+  get(k, d) { try { const v = localStorage.getItem('abg.' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem('abg.' + k, JSON.stringify(v)); } catch (e) { toast('مساحة التخزين ممتلئة'); } }
+};
+const A = window.Android && window.Android.shareStart ? window.Android : null;
+
+/* ---------- المصادقة والجلسات ---------- */
+const AUTH_API = 'https://abu-sabra-auth.mohamedsayed2009326.workers.dev';
+const Auth = (() => {
+  let token = '', deviceId = '', expiry = 0, timer = null;
+  const native = window.Android || null;
+  function getDevice() {
+    try { if (native && native.getDeviceId) return native.getDeviceId(); } catch (_) {}
+    let id = localStorage.getItem('abg.deviceId'); if (!id) { const b = crypto.getRandomValues(new Uint8Array(32)); id = [...b].map(x => x.toString(16).padStart(2,'0')).join(''); localStorage.setItem('abg.deviceId', id); } return id;
+  }
+  function getToken() { try { return native && native.getAuthToken ? native.getAuthToken() : sessionStorage.getItem('abg.session') || ''; } catch (_) { return ''; } }
+  function setToken(v) { token = v; try { if (native && native.setAuthToken) native.setAuthToken(v); else sessionStorage.setItem('abg.session', v); } catch (_) {} }
+  function clear() { token = ''; expiry = 0; try { if (native && native.clearAuthToken) native.clearAuthToken(); else sessionStorage.removeItem('abg.session'); } catch (_) {} clearInterval(timer); timer = null; }
+  async function request(path, options = {}) {
+    if (!AUTH_API.startsWith('https://') || AUTH_API.includes('REPLACE-WITH')) throw new Error('خدمة التفعيل لم يتم إعداد عنوانها بعد');
+    const headers = Object.assign({ 'content-type':'application/json', 'x-device-id':deviceId }, options.headers || {});
+    if (token) headers.authorization = 'Bearer ' + token;
+    const r = await fetch(AUTH_API + path, Object.assign({}, options, { headers, cache:'no-store' }));
+    const data = await r.json().catch(() => ({})); if (!r.ok) throw new Error(data.error || 'تعذر الاتصال بخدمة التفعيل'); return data;
+  }
+  function lock(message) { clear(); Voice.stop(); const gate = $('#authGate'); gate.classList.add('show'); $('#authMessage').textContent = message || 'الجلسة انتهت. أدخل رمز التفعيل مرة أخرى.'; }
+  async function validate() { if (!token) return false; try { const d = await request('/api/session', { method:'GET', headers:{ 'content-type':'application/json' } }); expiry = d.expiresAt * 1000; return !!d.valid; } catch (_) { return false; } }
+  function watch() { clearInterval(timer); timer = setInterval(async () => { if (document.visibilityState === 'visible' && !(await validate())) lock('انتهت الجلسة أو تم إيقاف التفعيل. أدخل الرمز مجددًا.'); }, 60000); document.addEventListener('visibilitychange', async () => { if (document.visibilityState === 'visible' && token && !(await validate())) lock(); }); }
+  async function init() { deviceId = getDevice(); token = getToken(); if (await validate()) { $('#authGate').classList.remove('show'); watch(); return true; } lock('أدخل رمز التفعيل للمتابعة.'); return false; }
+  async function login(code) { if (!/^[A-Za-z0-9-]{8,40}$/.test(code)) throw new Error('اكتب رمز التفعيل بشكل صحيح'); const d = await request('/api/login', { method:'POST', body:JSON.stringify({ code:code.toUpperCase(), deviceId }) }); if (!/^[a-f0-9]{64}$/.test(d.token || '')) throw new Error('استجابة غير صالحة من السيرفر'); setToken(d.token); expiry = d.expiresAt * 1000; $('#authGate').classList.remove('show'); watch(); return true; }
+  async function geminiToken() { if (!(await validate())) { lock(); throw new Error('انتهت الجلسة'); } return (await request('/api/gemini-token', { method:'POST', body:'{}' })).token; }
+  async function logout() { try { await request('/api/logout', { method:'POST', body:'{}' }); } catch (_) {} lock('تم تسجيل الخروج. أدخل رمز التفعيل للمتابعة.'); }
+  return { init, login, geminiToken, logout, isReady:() => !!token };
+})();
+$('#activateBtn').addEventListener('click', async () => { const b=$('#activateBtn'), m=$('#authMessage'), code=$('#activationCode').value.trim(); b.disabled=true; m.textContent='جارٍ التحقق…'; try { await Auth.login(code); $('#activationCode').value=''; m.textContent='تم التفعيل'; } catch(e) { m.textContent=e.message; } finally { b.disabled=false; } });
+$('#activationCode').addEventListener('keydown', e => { if (e.key === 'Enter') $('#activateBtn').click(); });
+const STATUS_TX = { ok: 'سليمة', err: 'خطأ', req: 'مطلوبة' };
+const STATUS_IC = { ok: '✓', err: '!', req: '⚠' };
+
+/* ---------- الحالة ---------- */
+let settings = Object.assign({ theme: 'dark', mode: 'abu', locOn: true }, LS.get('settings', {}));
+if (settings.key) { delete settings.key; LS.set('settings', settings); }
+let log = LS.get('log', []);
+let seq = LS.get('seq', log.reduce((m, e) => Math.max(m, e.n || 0), 0));
+let zones = LS.get('zones', []);
+let geocache = LS.get('geo', {});
+let fileMeta = null;
+let tab = 'scan', allLimit = 300, newIds = new Set();
+let saveT = null;
+function saveLog() { clearTimeout(saveT); saveT = setTimeout(() => { LS.set('log', log); LS.set('seq', seq); }, 300); }
+function saveSettings() { LS.set('settings', settings); }
+
+/* ---------- واجهة عامة ---------- */
+let toastT;
+function toast(m, ms) { const t = $('#toast'); t.textContent = m; t.style.display = 'block'; clearTimeout(toastT); toastT = setTimeout(() => t.style.display = 'none', ms || 2600); }
+const modalStack = [];
+function openModal(html, cls, onClose) {
+  const el = document.createElement('div'); el.className = 'mod ' + (cls || '');
+  el.innerHTML = '<div class="box">' + html + '</div>';
+  $('#modals').appendChild(el);
+  const m = { el, close() { const i = modalStack.indexOf(m); if (i >= 0) modalStack.splice(i, 1); el.remove(); if (onClose) onClose(); }, q: s => el.querySelector(s) };
+  modalStack.push(m);
+  if (!cls || !/alert|noclose/.test(cls)) el.addEventListener('click', e => { if (e.target === el) m.close(); });
+  return m;
+}
+function confirmDlg(msg, okTx, danger) {
+  return new Promise(res => {
+    let done = false; const fin = v => { if (!done) { done = true; res(v); } };
+    const m = openModal(`<p style="font-size:1.05rem;line-height:1.7">${esc(msg)}</p><div class="row"><button class="${danger ? 'dng' : 'pri'} sp" id="cOk">${esc(okTx || 'تأكيد')}</button><button class="sp" id="cNo">إلغاء</button></div>`, '', () => fin(false));
+    m.q('#cOk').onclick = () => { fin(true); m.close(); };
+    m.q('#cNo').onclick = () => m.close();
+  });
+}
+function infoDlg(title, msg) { const m = openModal(`<h3>${esc(title)}</h3><p style="line-height:1.7;overflow-wrap:anywhere">${esc(msg)}</p><button class="pri" style="width:100%" id="ok">تمام</button>`); m.q('#ok').onclick = () => m.close(); }
+function progressModal(title) {
+  const m = openModal(`<h3>${esc(title)}</h3><div class="bar"><i id="pb" style="width:5%"></i></div><p class="hint" id="pt">…</p>`, 'noclose');
+  return { set(t, pct) { const p = m.q('#pt'); if (p) p.textContent = t; if (pct != null) m.q('#pb').style.width = pct + '%'; }, close: () => m.close() };
+}
+window.__back = () => { if (modalStack.length) { modalStack[modalStack.length - 1].close(); return true; } if (tab !== 'scan') { showTab('scan'); return true; } return false; };
+function pad2(n) { return String(n).padStart(2, '0'); }
+function fmtTime(ts) { const d = new Date(ts), n = new Date(); const t = pad2(d.getHours()) + ':' + pad2(d.getMinutes()); return d.toDateString() === n.toDateString() ? t : `${d.getDate()}/${d.getMonth() + 1} ${t}`; }
+function fmtFull(ts) { const d = new Date(ts); return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())} ${pad2(d.getHours())}:${pad2(d.getMinutes())}:${pad2(d.getSeconds())}`; }
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+const mapUrl = (lat, lng) => `https://maps.google.com/?q=${lat},${lng}`;
+
+/* ---------- IndexedDB (ملف المطابقة) ---------- */
+let dbP = null;
+function idb() {
+  if (!dbP) dbP = new Promise((res, rej) => {
+    const rq = indexedDB.open('abusabra', 1);
+    rq.onupgradeneeded = () => { const d = rq.result; d.createObjectStore('plates', { keyPath: 'k' }); d.createObjectStore('meta', { keyPath: 'id' }); };
+    rq.onsuccess = () => res(rq.result); rq.onerror = () => rej(rq.error);
+  });
+  return dbP;
+}
+const reqP = r => new Promise((res, rej) => { r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); });
+const txDone = t => new Promise((res, rej) => { t.oncomplete = () => res(); t.onerror = () => rej(t.error); t.onabort = () => rej(t.error); });
+async function dbGet(store, key) { const d = await idb(); return reqP(d.transaction(store).objectStore(store).get(key)); }
+async function dbCount() { const d = await idb(); return reqP(d.transaction('plates').objectStore('plates').count()); }
+async function dbPutBatch(list) { const d = await idb(); const t = d.transaction('plates', 'readwrite'), s = t.objectStore('plates'); for (const x of list) s.put(x); return txDone(t); }
+async function dbMeta(m) { const d = await idb(); const t = d.transaction('meta', 'readwrite'); if (m) t.objectStore('meta').put(Object.assign({ id: 'file' }, m)); return txDone(t); }
+async function dbGetMeta() { try { return await dbGet('meta', 'file'); } catch (e) { return null; } }
+function idbSink() {
+  return {
+    async begin() { const d = await idb(); const t = d.transaction('plates', 'readwrite'); t.objectStore('plates').clear(); await txDone(t); },
+    putBatch: dbPutBatch,
+    async finish(meta) { await dbMeta(Object.assign({}, meta, { at: Date.now() })); }
+  };
+}
+async function matchPlate(plate) {
+  const k = normalizePlateKey(plate); if (!k) return null;
+  try { const rec = await dbGet('plates', k); if (!rec) return null; const m = fileMeta || await dbGetMeta(); return matchPairs(m ? m.headers : [], rec.r, m ? m.plateCol : -1); } catch (e) { return null; }
+}
+async function refreshFileInfo() { fileMeta = await dbGetMeta(); if (fileMeta) { try { fileMeta.count = await dbCount(); } catch (e) { } } return fileMeta; }
+
+/* ---------- الموقع ---------- */
+let lastPos = null, watchId = null, pollT = null;
+function startLocation() {
+  if (!navigator.geolocation) { toast('الموقع مش مدعوم'); return; }
+  if (watchId != null) return;
+  const ok = p => { lastPos = { lat: p.coords.latitude, lng: p.coords.longitude, acc: p.coords.accuracy, t: Date.now() }; updLocBtn(); };
+  const bad = e => { if (e && e.code === 1) { toast('صلاحية الموقع مرفوضة — فعّلها من إعدادات الموبايل'); stopLocation(); settings.locOn = false; saveSettings(); } };
+  watchId = navigator.geolocation.watchPosition(ok, bad, { enableHighAccuracy: true, maximumAge: 5000, timeout: 30000 });
+  pollT = setInterval(() => navigator.geolocation.getCurrentPosition(ok, () => { }, { enableHighAccuracy: true, maximumAge: 0, timeout: 15000 }), 45000);
+  updLocBtn();
+}
+function stopLocation() { if (watchId != null) navigator.geolocation.clearWatch(watchId); watchId = null; clearInterval(pollT); updLocBtn(); }
+function updLocBtn() { const b = $('#btnLoc'); const on = watchId != null; b.textContent = on ? (lastPos ? '📍 الموقع ✓' : '📍 بيحدد…') : '📍 الموقع'; b.className = on ? 'gold' : ''; }
+const freshPos = () => lastPos && Date.now() - lastPos.t <= 120000 ? lastPos : null;
+
+/* ---------- المناطق + الأحياء ---------- */
+const gk = e => e.lat.toFixed(3) + ',' + e.lng.toFixed(3);
+function applyZones() {
+  let ch = false;
+  for (const e of log) {
+    if (e.lat == null) continue;
+    const z = zoneFor(zones, e.lat, e.lng);
+    if (z) { if (e.area !== z || e.areaSrc !== 'zone') { e.area = z; e.areaSrc = 'zone'; ch = true; } }
+    else if (e.areaSrc === 'zone') { e.area = ''; e.areaSrc = ''; ch = true; }
+  }
+  if (ch) { saveLog(); render(); }
+}
+const failedUntil = {};
+async function reverseGeocode(lat, lng) {
+  const j = async (url) => { const c = new AbortController(), t = setTimeout(() => c.abort(), 8000); try { const r = await fetch(url, { signal: c.signal }); if (!r.ok) throw new Error('http ' + r.status); return await r.json(); } finally { clearTimeout(t); } };
+  try {
+    const d = await j(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}&zoom=16&accept-language=ar`);
+    const a = d.address || {};
+    const n = a.neighbourhood || a.suburb || a.quarter || a.city_district || a.village || a.town || a.city || a.county || a.state_district;
+    if (n) return n;
+  } catch (e) { }
+  const d2 = await j(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=ar`);
+  const n2 = d2.locality || d2.city || d2.principalSubdivision;
+  if (!n2) throw new Error('no name');
+  return n2;
+}
+function applyGeo(k, name) { let ch = false; for (const e of log) if (e.lat != null && !e.area && gk(e) === k) { e.area = name; e.areaSrc = 'geo'; ch = true; } if (ch) { saveLog(); render(); } }
+let geoBusy = false;
+async function geoStep() {
+  if (geoBusy || !navigator.onLine) return;
+  const now = Date.now();
+  for (let i = log.length - 1; i >= 0; i--) {
+    const e = log[i]; if (e.lat == null || e.area) continue;
+    const k = gk(e);
+    if (geocache[k]) { applyGeo(k, geocache[k]); continue; }
+    if ((failedUntil[k] || 0) > now) continue;
+    geoBusy = true;
+    try { const n = await reverseGeocode(e.lat, e.lng); geocache[k] = n; LS.set('geo', geocache); applyGeo(k, n); }
+    catch (er) { failedUntil[k] = Date.now() + 20000; }
+    geoBusy = false; return;
+  }
+}
+setInterval(geoStep, 1100);
+
+/* ---------- عرض الجدول ---------- */
+function plateHtml(plate) {
+  const m = /^([^0-9]*)(.*)$/.exec(plate); const L = [...m[1]].join('\u2002');
+  return `<span class="pl" data-act="edit"><span class="l">${esc(L)}</span><span class="d">${esc(m[2])}</span></span>`;
+}
+function locHtml(e) {
+  if (e.lat == null) return '<span class="sub">—</span>';
+  return `<a href="${mapUrl(e.lat, e.lng)}">${esc(e.area || 'الخريطة')}</a>`;
+}
+function rowHtml(e) {
+  const mt = e.match && e.match.length ? `<div class="mt">${e.match.map(p => `<b>${esc(p[0])}:</b> ${esc(p[1])}`).join(' · ')}</div>` : '';
+  return `<tr data-id="${e.id}" class="${e.status === 'req' ? 'req' : ''}${newIds.has(e.id) ? ' newrow' : ''}"><td class="n">${e.n}</td><td>${plateHtml(e.plate)}<div class="sub">${fmtTime(e.ts)}${e.mode === 'ext' ? ' · خارجي' : ''}${e.src === 'voice-interim' ? ' · من النص المبدئي' : ''}</div>${mt}</td><td>${esc(e.type)}</td><td>${locHtml(e)}</td><td class="st ${e.status}">${STATUS_IC[e.status]}</td><td><button class="x" data-act="del" aria-label="مسح">✕</button></td></tr>`;
+}
+let rq = false;
+function render() { if (rq) return; rq = true; requestAnimationFrame(() => { rq = false; renderNow(); }); }
+function renderNow() {
+  const rev = log.slice().reverse();
+  $('#tbScan').innerHTML = rev.length ? rev.slice(0, 100).map(rowHtml).join('') : '<tr><td colspan="6" class="empty">لسه مفيش لوحات</td></tr>';
+  if (tab === 'all') {
+    $('#tbAll').innerHTML = rev.length ? rev.slice(0, allLimit).map(rowHtml).join('') : '<tr><td colspan="6" class="empty">السجل فاضي</td></tr>';
+    $('#btnMore').style.display = rev.length > allLimit ? 'block' : 'none';
+    const c = { ok: 0, err: 0, req: 0 }; log.forEach(e => c[e.status]++);
+    $('#allStats').innerHTML = `<span>الكل: <b>${log.length}</b></span><span>✓ سليمة: <b>${c.ok}</b></span><span>! خطأ: <b>${c.err}</b></span><span>⚠ مطلوبة: <b>${c.req}</b></span>`;
+  }
+  if (tab === 'manual') $('#lastFive').innerHTML = rev.slice(0, 5).map(e => `<div class="mini" data-id="${e.id}">${plateHtml(e.plate)}<span class="sp sub">${esc(e.type)}</span><span class="st ${e.status}" style="font-weight:800">${STATUS_IC[e.status]}</span></div>`).join('') || '<div class="empty">—</div>';
+  const w = log.filter(e => e.status === 'req').length, b = $('#wantedBadge'); b.style.display = w ? 'block' : 'none'; b.textContent = w;
+  newIds.clear();
+}
+function showTab(t) { tab = t; $$('.tab').forEach(x => x.classList.toggle('on', x.id === 'tab-' + t)); $$('#nav button').forEach(b => b.classList.toggle('on', b.dataset.tab === t)); renderNow(); }
+
+/* ---------- إضافة لوحة / مطابقة / تنبيه ---------- */
+const baseStatus = plate => /^[ابجحدرسصطعفقكلمنهوي]{3}[0-9]{4}$/.test(plate) ? 'ok' : 'err';
+function addPlate(p, src) {
+  const pos = freshPos();
+  const e = { id: uid(), n: ++seq, plate: p.plate, type: p.type || '', ts: p.ts || Date.now(), status: p.status || baseStatus(p.plate), lat: pos ? pos.lat : null, lng: pos ? pos.lng : null, area: '', areaSrc: '', mode: settings.mode, src, match: null };
+  if (e.lat != null) { const z = zoneFor(zones, e.lat, e.lng); if (z) { e.area = z; e.areaSrc = 'zone'; } else if (geocache[gk(e)]) { e.area = geocache[gk(e)]; e.areaSrc = 'geo'; } }
+  log.push(e); p.entryId = e.id; newIds.add(e.id); saveLog(); render();
+  checkMatch(e, true);
+  return e;
+}
+async function checkMatch(e, alertIt) {
+  const m = await matchPlate(e.plate);
+  if (m) { e.match = m; e.status = 'req'; saveLog(); render(); if (alertIt) queueAlert(e); }
+  return m;
+}
+const alertQ = []; let alertOpen = false;
+function queueAlert(e) { alertQ.push(e); if (!alertOpen) nextAlert(); }
+function beep() { try { const c = new (window.AudioContext || window.webkitAudioContext)(), o = c.createOscillator(), g = c.createGain(); o.frequency.value = 880; o.connect(g); g.connect(c.destination); g.gain.value = .25; o.start(); setTimeout(() => { o.stop(); c.close(); }, 450); } catch (er) { } }
+function nextAlert() {
+  const e = alertQ.shift(); if (!e) { alertOpen = false; return; }
+  alertOpen = true;
+  if (Voice.state() === 'listening' || Voice.state() === 'connecting' || Voice.state() === 'reconnecting') Voice.pause();
+  try { navigator.vibrate && navigator.vibrate([400, 120, 400, 120, 800]); } catch (er) { }
+  beep();
+  try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance('مطلوبة'); u.lang = 'ar-SA'; speechSynthesis.speak(u); } catch (er) { }
+  const kv = (e.match || []).map(p => `<b>${esc(p[0])}</b><span>${esc(p[1])}</span>`).join('');
+  const m = openModal(`<h2>⚠ مطلوبة!</h2><div>${plateHtml(e.plate)}</div>${e.type ? `<div class="sub">${esc(e.type)}</div>` : ''}<div class="kv">${kv || '<span>—</span>'}</div><div class="sub">${fmtTime(e.ts)}${e.area ? ' · ' + esc(e.area) : ''}</div><button class="gold" style="width:100%;margin-top:12px;padding:14px;font-size:1.1rem" id="aOk">إغلاق</button>`, 'alert', () => { setTimeout(nextAlert, 150); });
+  m.q('.pl').style.pointerEvents = 'none';
+  m.q('#aOk').onclick = () => m.close();
+}
+function updateResumeCard() { $('#btnResume').classList.toggle('show', Voice.state() === 'paused'); }
+
+/* ---------- تعديل / مسح / تراجع ---------- */
+function editEntry(e) {
+  const m = openModal(`<h3>تعديل اللوحة</h3><input type="text" id="eIn" value="${esc(e.plate)}" autocomplete="off"><p class="hint">اكتب اللوحة (3 حروف + 4 أرقام) — هيعاد التحقق والمطابقة.</p><div class="row"><button class="pri sp" id="eOk">حفظ</button><button class="sp" id="eNo">إلغاء</button></div>`);
+  const go = async () => {
+    const ps = parseManual(m.q('#eIn').value); if (!ps.length) { toast('مش لاقي لوحة في النص'); return; }
+    const p = ps[0]; e.plate = p.plate; e.status = baseStatus(p.plate); if (p.type) e.type = p.type; e.match = null;
+    m.close(); saveLog(); render(); await checkMatch(e, true);
+  };
+  m.q('#eOk').onclick = go; m.q('#eNo').onclick = () => m.close();
+  m.q('#eIn').addEventListener('keydown', ev => { if (ev.key === 'Enter') go(); });
+}
+let undoItem = null, undoT = null;
+function delEntry(e) {
+  const i = log.indexOf(e); if (i < 0) return; log.splice(i, 1); undoItem = { e, i }; saveLog(); render();
+  $('#undoTx').textContent = 'اتمسحت ' + e.plate; $('#undo').classList.add('show'); clearTimeout(undoT); undoT = setTimeout(() => { $('#undo').classList.remove('show'); undoItem = null; }, 6000);
+}
+$('#undoBtn').onclick = () => { if (!undoItem) return; log.splice(Math.min(undoItem.i, log.length), 0, undoItem.e); undoItem = null; $('#undo').classList.remove('show'); saveLog(); render(); };
+function tableClick(ev) {
+  const t = ev.target.closest('[data-act]'); if (!t) return;
+  const tr = t.closest('[data-id]'); if (!tr) return; const e = log.find(x => x.id === tr.dataset.id); if (!e) return;
+  if (t.dataset.act === 'del') delEntry(e); else if (t.dataset.act === 'edit') editEntry(e);
+}
+['#tbScan', '#tbAll', '#lastFive'].forEach(s => $(s).addEventListener('click', tableClick));
+$('#btnMore').onclick = () => { allLimit += 300; renderNow(); };
+$('#btnClear').onclick = async () => { if (await confirmDlg('تمسح السجل كله؟ مش هينفع ترجعه.', 'مسح الكل', true)) { log = []; saveLog(); render(); toast('اتمسح السجل'); } };
+
+/* ---------- فحص يدوي ---------- */
+function manualAdd() {
+  const v = $('#manIn').value.trim(); if (!v) return; if (v.length > 200) { toast('المدخل طويل جدًا'); return; }
+  const ps = parseManual(v); if (!ps.length) { toast('مش لاقي لوحة في النص'); return; }
+  ps.forEach(p => addPlate(p, 'manual')); $('#manIn').value = ''; toast('اتضافت ' + ps.length + ' لوحة');
+}
+$('#manGo').onclick = manualAdd;
+$('#manIn').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); manualAdd(); } });
+
+/* ---------- الصوت (Gemini Live) ---------- */
+const Voice = (() => {
+  const WS = 'wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContentConstrained?access_token=';
+  const MODEL = 'models/gemini-3.5-transcribe-live';
+  let ws = null, ctx = null, stream = null, proc = null, active = false, ready = false, state = 'idle', fails = 0, everReady = false;
+  let sessStart = 0, lastSpeech = 0, ring = [], parser = null, tickT = null, sigT = null, rcT = null, chain = Promise.resolve(), noMode = LS.get('noMode', false);
+  let acc = new Int16Array(2048), accN = 0, lvl = 0, drainT = null, segInterim = '', segInterimAt = 0; const rawLog = [];
+  const setState = (s, msg) => {
+    state = s; const names = { idle: 'متوقف', connecting: 'بيتصل…', listening: 'يستمع الآن', reconnecting: 'بيعيد الاتصال…', paused: 'متوقف مؤقتاً', error: 'خطأ' };
+    $('#vState').textContent = msg || names[s]; $('#vDot').className = 'dot ' + s;
+    const run = s === 'listening' || s === 'connecting' || s === 'reconnecting';
+    $('#btnStart').style.display = run ? 'none' : ''; $('#btnStop').style.display = run ? '' : 'none'; updateResumeCard();
+  };
+  function micErr(e) {
+    const n = e && e.name; if (n === 'NotAllowedError' || n === 'SecurityError') return 'صلاحية الميكروفون مرفوضة — فعّلها للتطبيق من إعدادات الموبايل';
+    if (n === 'NotFoundError') return 'مفيش ميكروفون في الجهاز'; return 'تعذّر تشغيل الميكروفون: ' + (e && e.message || n);
+  }
+  const b64 = u8 => { let s = ''; for (let i = 0; i < u8.length; i += 0x8000) s += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000)); return btoa(s); };
+  function sendChunk(i16) {
+    const data = b64(new Uint8Array(i16.buffer, i16.byteOffset, i16.byteLength));
+    if (ws && ready && ws.readyState === 1) ws.send(JSON.stringify({ realtimeInput: { audio: { data, mimeType: 'audio/pcm;rate=16000' } } }));
+    else { ring.push(data); if (ring.length > 20) ring.shift(); }
+  }
+  function onAudio(f32) {
+    let sum = 0; for (let i = 0; i < f32.length; i++) sum += f32[i] * f32[i];
+    const rms = Math.sqrt(sum / f32.length); lvl = Math.min(100, Math.round(rms * 700));
+    if (lvl > 8) lastSpeech = Date.now();
+    let src = f32;
+    if (ctx.sampleRate !== 16000) { const ratio = ctx.sampleRate / 16000, n = Math.floor(f32.length / ratio); src = new Float32Array(n); for (let i = 0; i < n; i++) { const p = i * ratio, i0 = Math.floor(p), fr = p - i0; src[i] = f32[i0] * (1 - fr) + (f32[Math.min(i0 + 1, f32.length - 1)] * fr); } }
+    for (let i = 0; i < src.length; i++) {
+      const s = Math.max(-1, Math.min(1, src[i])); acc[accN++] = s < 0 ? s * 0x8000 : s * 0x7FFF;
+      if (accN === 2048) { sendChunk(acc.slice()); accN = 0; }
+    }
+  }
+  function setupMsg() {
+    // VERBATIM (الافتراضي): نص حرفي زي ما اتقال. SMART بيعمل "تنضيف" وممكن يبوّظ لوحات ورا بعض.
+    return { setup: { model: MODEL, generationConfig: { responseModalities: ['TEXT'] }, inputAudioTranscription: { languageCodes: ['ar-EG'], customVocabulary: VOCAB } } };
+  }
+  function signal() {
+    let q = 2;
+    if (!navigator.onLine) q = 0;
+    else {
+      const et = navigator.connection && navigator.connection.effectiveType, map = { '4g': 2, '3g': 1 };
+      if (et) q = Math.min(q, map[et] === undefined ? 0 : map[et]);
+      if (ws) { const bf = ws.bufferedAmount; q = Math.min(q, bf < 16384 ? 2 : bf < 131072 ? 1 : 0); }
+    }
+    return ['ضعيف', 'متوسط', 'قوي'][q];
+  }
+  function connect() {
+    if (!active) return;
+    ready = false; setState(everReady ? 'reconnecting' : 'connecting');
+    let sock, gotSetup = false, to;
+    ws = null;
+    Auth.geminiToken().then(ephemeral => {
+      if (!active) return;
+      try { sock = new WebSocket(WS + encodeURIComponent(ephemeral)); } catch (e) { preFail({ code: 0, reason: String(e.message || e) }); return; }
+      ws = sock;
+      to = setTimeout(() => { if (!gotSetup) try { sock.close(4000, 'timeout'); } catch (e) { } }, 12000);
+      sock.onopen = () => { try { sock.send(JSON.stringify(setupMsg())); } catch (e) { } };
+      sock.onmessage = ev => { chain = chain.then(async () => { try { const txt = typeof ev.data === 'string' ? ev.data : await ev.data.text(); onMsg(JSON.parse(txt), sock, () => { gotSetup = true; clearTimeout(to); }); } catch (e) { } }); };
+      sock.onerror = () => { };
+      sock.onclose = ev => { clearTimeout(to); if (sock !== ws) return; ready = false; ws = null; if (!active) return; if (!gotSetup) preFail(ev); else retry(300); };
+    }).catch(e => preFail({ code: 401, reason: e.message || 'auth' }));
+    // A fresh one-use ephemeral token is obtained for every connection.
+  }
+  function onMsg(m, sock, markSetup) {
+    if (m.setupComplete !== undefined) {
+      markSetup(); ready = true; everReady = true; fails = 0; sessStart = Date.now();
+      for (const d of ring) sock.send(JSON.stringify({ realtimeInput: { audio: { data: d, mimeType: 'audio/pcm;rate=16000' } } })); ring = [];
+      setState('listening'); return;
+    }
+    if (m.goAway) { rotate(); return; }
+    const sc = m.serverContent; if (!sc) return;
+    if (sc.interimInputTranscription && sc.interimInputTranscription.text != null) {
+      const it = sc.interimInputTranscription.text; $('#vInterim').textContent = it || '…';
+      if (it) { segInterim = it; segInterimAt = Date.now(); }
+    }
+    if (sc.inputTranscription && sc.inputTranscription.text) {
+      const t = sc.inputTranscription.text; $('#vInterim').textContent = t;
+      rawLog.push(t); if (rawLog.length > 8) rawLog.shift(); $('#vRaw').textContent = rawLog.join('\n');
+      if (parser) {
+        parser.feed(t, Date.now());
+        // شبكة أمان: لو النص المبدئي فيه لوحات زيادة عن النهائي (والنهائي متأكد منها) نضيفها
+        const extra = segInterim ? missingFromInterim(segInterim, t) : [];
+        extra.forEach(p => { p.ts = Date.now(); addPlate(p, 'voice-interim'); });
+      }
+      segInterim = '';
+    }
+    if (sc.turnComplete && parser) { flushStaleInterim(true); parser.turnComplete(Date.now()); }
+  }
+  /* نص مبدئي ماجاش له نهائي: بعد 3 ثواني (أو عند الإيقاف) بنعامله كنهائي */
+  function flushStaleInterim(force) {
+    if (!segInterim || !parser) return;
+    if (!force && Date.now() - segInterimAt < 3000) return;
+    const t = segInterim; segInterim = '';
+    rawLog.push('(مبدئي) ' + t); if (rawLog.length > 8) rawLog.shift(); $('#vRaw').textContent = rawLog.join('\n');
+    parser.feed(t, Date.now());
+  }
+  function preFail(ev) {
+    const reason = String(ev.reason || ''), code = ev.code; fails++;
+    const limit = everReady ? 12 : 3;
+    let msg;
+    if (!navigator.onLine) msg = 'مفيش إنترنت';
+    else if (code === 1008 || /api key|key|permission|denied|unauth|billing|quota/i.test(reason)) msg = 'مفتاح Gemini غلط أو منتهي أو مش مفعّل للموديل' + (reason ? ' — ' + reason.slice(0, 140) : '');
+    else msg = 'فشل الاتصال بـ Gemini (كود ' + code + (reason ? ': ' + reason.slice(0, 140) : '') + ') — اتأكد من النت والمفتاح';
+    if (fails >= limit || /key|permission|denied|unauth/i.test(msg) && code === 1008) { teardown(); setState('error', 'تعذّر الاتصال'); infoDlg('تعذّر الاتصال', msg); return; }
+    setState('reconnecting', msg.slice(0, 40)); retry(Math.min(8000, 1000 * fails));
+  }
+  function retry(ms) {
+    if (!active) return; clearTimeout(rcT);
+    if (!navigator.onLine) { setState('reconnecting', 'مفيش إنترنت.. هحاول تاني'); const h = () => { window.removeEventListener('online', h); connect(); }; window.addEventListener('online', h); return; }
+    rcT = setTimeout(connect, ms);
+  }
+  function rotate() { if (ws && ready) { try { ws.close(1000, 'rotate'); } catch (e) { } } }
+  async function start() {
+    if (active) return;
+    if (drainT) finishDrain();
+    if (!(await Auth.init())) return;
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { infoDlg('الميكروفون', 'الميكروفون مش متاح (الصفحة لازم تفتح من التطبيق).'); return; }
+    setState('connecting');
+    try { stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true, channelCount: 1 } }); }
+    catch (e) { setState('idle'); infoDlg('الميكروفون', micErr(e)); return; }
+    active = true; fails = 0; everReady = false; ring = []; accN = 0;
+    try { ctx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 }); } catch (e) { ctx = new (window.AudioContext || window.webkitAudioContext)(); }
+    if (ctx.state === 'suspended') ctx.resume();
+    const src = ctx.createMediaStreamSource(stream); proc = ctx.createScriptProcessor(2048, 1, 1);
+    const mute = ctx.createGain(); mute.gain.value = 0; src.connect(proc); proc.connect(mute); mute.connect(ctx.destination);
+    proc.onaudioprocess = e => onAudio(e.inputBuffer.getChannelData(0));
+    parser = createParser({ onPlate: p => addPlate(p, 'voice'), onType: p => { const e = log.find(x => x.id === p.entryId); if (e) { e.type = p.type; saveLog(); render(); } } });
+    tickT = setInterval(() => parser.tick(Date.now()), 250);
+    sigT = setInterval(() => {
+      $('#vLvl').style.width = lvl + '%'; $('#vPct').textContent = lvl + '%'; $('#vSig').textContent = 'الإشارة: ' + signal();
+      flushStaleInterim(false);
+      const age = Date.now() - sessStart;
+      if (ready && age > 540000 && (Date.now() - lastSpeech > 1500 || age > 585000)) rotate();
+    }, 400);
+    if (settings.locOn !== false) startLocation();
+    connect();
+  }
+  function stopCapture() {
+    clearInterval(sigT);
+    try { proc && proc.disconnect(); } catch (e) { } proc = null;
+    if (stream) stream.getTracks().forEach(t => t.stop()); stream = null;
+    if (ctx) { try { ctx.close(); } catch (e) { } ctx = null; }
+    ring = []; lvl = 0; $('#vLvl').style.width = '0'; $('#vPct').textContent = '0%';
+  }
+  /* بيقفل الاتصال ويسجّل أي لوحة لسه ناقصة */
+  function finishDrain() {
+    clearTimeout(drainT); drainT = null; clearInterval(tickT);
+    flushStaleInterim(true);
+    if (parser) { try { parser.turnComplete(Date.now()); } catch (e) { } }
+    if (ws) { ws.onclose = null; try { ws.close(1000, 'bye'); } catch (e) { } ws = null }
+    ready = false;
+  }
+  function teardown() { active = false; clearTimeout(rcT); stopCapture(); finishDrain(); }
+  return {
+    state: () => state, start,
+    stop() { teardown(); setState('idle'); },
+    /* إيقاف مؤقت: الميكروفون بيقف فوراً، بس الاتصال بيفضل ~2.5 ثانية
+       عشان أي لوحات اتقالت ورا اللوحة المطلوبة تتكتب برضه */
+    pause() {
+      if (!active) return;
+      active = false; clearTimeout(rcT); stopCapture(); setState('paused');
+      try { if (ws && ready) ws.send(JSON.stringify({ realtimeInput: { audioStreamEnd: true } })); } catch (e) { }
+      clearTimeout(drainT); drainT = setTimeout(finishDrain, 2500);
+    },
+    resume() { if (state === 'paused') start(); }
+  };
+})();
+$('#btnStart').onclick = () => Voice.start();
+$('#btnStop').onclick = () => Voice.stop();
+$('#btnResume').onclick = () => Voice.resume();
+$('#btnLoc').onclick = () => { if (watchId != null) { stopLocation(); settings.locOn = false; } else { settings.locOn = true; startLocation(); } saveSettings(); };
+$$('#modeSeg button').forEach(b => b.onclick = () => { settings.mode = b.dataset.mode; saveSettings(); $$('#modeSeg button').forEach(x => x.classList.toggle('on', x === b)); });
+
+/* ---------- استيراد ملف المطابقة ---------- */
+async function runImport(file, col) {
+  if (!file || !/\.(xlsx|csv)$/i.test(file.name || '') || file.size > 50 * 1024 * 1024) { infoDlg('ملف غير صالح', 'اختر ملف XLSX أو CSV لا يتجاوز 50 ميجابايت.'); return; }
+  const pm = progressModal('بقرا ملف المطابقة…');
+  try {
+    pm.set('بيحلل الملف…', 3);
+    const res = await importMatchFile(file, idbSink(), { col, onProgress: p => pm.set(`قريت ${p.rows.toLocaleString('ar-EG')} صف — لقيت ${p.plates.toLocaleString('ar-EG')} لوحة`, Math.min(95, 5 + p.rows / 10000)) });
+    pm.close(); await refreshFileInfo(); toast(`تم تحديث الملف: ${res.count.toLocaleString('ar-EG')} لوحة`, 3500);
+    if (res.count === 0) infoDlg('تنبيه', 'الملف اتقرا بس مفيش فيه لوحات بالشكل المطلوب (حروف + أرقام).');
+    await rescanLog(); updateFileCard();
+  } catch (e) {
+    pm.close();
+    if (e && e.needColumn) { chooseColumn(e.columns, file); return; }
+    infoDlg('مشكلة في الملف', (e && e.message) || 'الملف مش xlsx ولا csv صحيح');
+  }
+}
+function chooseColumn(cols, file) {
+  if (!cols.length) { infoDlg('مشكلة في الملف', 'الملف فاضي أو مفيهوش بيانات.'); return; }
+  const m = openModal(`<h3>أنهي عمود فيه اللوحات؟</h3><p class="hint">معرفتش أحدد عمود اللوحة تلقائي. اختار العمود:</p>${cols.map(c => `<button class="choice" data-c="${c.idx}"><b>عمود ${c.idx + 1}</b><div class="sub">${c.samples.map(esc).join(' | ')}</div></button>`).join('')}`);
+  m.el.querySelectorAll('.choice').forEach(b => b.onclick = () => { m.close(); runImport(file, parseInt(b.dataset.c, 10)); });
+}
+async function rescanLog() {
+  const found = [];
+  for (const e of log) {
+    const m = await matchPlate(e.plate); const was = e.status === 'req';
+    if (m) { e.match = m; e.status = 'req'; found.push({ e, isNew: !was }); } else if (was) { e.match = null; e.status = baseStatus(e.plate); }
+  }
+  saveLog(); render();
+  if (!found.length) return;
+  found.sort((a, b) => (b.isNew - a.isNew) || b.e.ts - a.e.ts);
+  const html = found.map(({ e, isNew }) => `<div class="card" style="margin:6px 0">${plateHtml(e.plate)} ${isNew ? '<b style="color:var(--g)">جديدة</b>' : ''}<div class="mt">${(e.match || []).map(p => `<b>${esc(p[0])}:</b> ${esc(p[1])}`).join(' · ')}</div><div class="sub">${fmtTime(e.ts)}${e.area ? ' · ' + esc(e.area) : ''}${e.lat != null ? ` · <a href="${mapUrl(e.lat, e.lng)}">الخريطة</a>` : ''}</div></div>`).join('');
+  const m = openModal(`<h3>⚠ لقيت ${found.length} لوحة مطلوبة في السجل</h3>${html}<button class="pri" style="width:100%;margin-top:8px" id="rsOk">تمام</button>`);
+  m.q('#rsOk').onclick = () => m.close(); m.el.querySelectorAll('.pl').forEach(x => x.style.pointerEvents = 'none');
+}
+$('#fileIn').addEventListener('change', e => { const f = e.target.files && e.target.files[0]; e.target.value = ''; if (f) runImport(f); });
+async function handleShared() {
+  if (!A) return; let s = ''; try { s = A.getPendingShared(); } catch (e) { }
+  if (!s) return; let info; try { info = JSON.parse(s); } catch (e) { return; }
+  try {
+    const r = await fetch('/shared/file?' + Date.now()); if (!r.ok) throw new Error('http ' + r.status);
+    const f = new File([await r.blob()], info.name || 'shared.xlsx');
+    if (await confirmDlg(`استبدال ملف المطابقة كله بالملف "${f.name}"؟`, 'استبدال')) runImport(f);
+  } catch (e) { infoDlg('الملف المشترك', 'مقدرتش أفتح الملف اللي اتشارك: ' + e.message); }
+}
+window.onSharedFile = handleShared;
+
+/* ---------- لصق لوحات ---------- */
+async function pastePlates(text) {
+  if (typeof text !== 'string' || text.length > 2_000_000) { toast('النص كبير جدًا'); return false; }
+  const lines = text.split(/\r?\n/).map(x => x.trim()).filter(Boolean); const recs = []; let bad = 0;
+  let meta = fileMeta || await dbGetMeta();
+  if (!meta) { meta = { name: 'لصق', headers: ['اللوحه'], plateCol: 0, count: 0 }; }
+  for (const ln of lines) { const k = normalizePlateKey(ln); if (!k) { bad++; continue; } const r = new Array(meta.headers.length).fill(''); r[meta.plateCol] = ln; recs.push({ k, r }); }
+  if (!recs.length) { toast('مفيش لوحات صالحة في النص'); return false; }
+  await dbPutBatch(recs); meta.count = await dbCount(); await dbMeta(Object.assign({}, meta, { at: Date.now() })); await refreshFileInfo();
+  toast(`اتضافت ${recs.length} لوحة` + (bad ? ` (${bad} سطر اتجاهل)` : '')); await rescanLog(); updateFileCard(); return true;
+}
+
+/* ---------- الإعدادات ---------- */
+let fileCardEl = null;
+function updateFileCard() { if (!fileCardEl || !fileCardEl.isConnected) return; const m = fileMeta; fileCardEl.innerHTML = m ? `<b>${esc(m.name)}</b><div class="sub">${(m.count || 0).toLocaleString('ar-EG')} لوحة${m.at ? ' · آخر تحديث ' + fmtTime(m.at) : ''}</div>` : '<span class="sub">مفيش ملف مطابقة لسه</span>'; }
+function zonesListHtml() {
+  if (!zones.length) return '<span class="sub">مفيش مناطق</span>';
+  const shown = zones.slice(0, 8).map(z => `<span class="sub">• ${esc(z.name)}</span>`).join('<br>');
+  return `<b>${zones.length} منطقة</b><br>` + shown + (zones.length > 8 ? '<br><span class="sub">…</span>' : '');
+}
+function openSettings() {
+  const m = openModal(`<h3>⚙ الإعدادات</h3>
+  <div class="card"><b>الأمان</b><p class="hint">الاتصال الصوتي يستخدم رمزًا مؤقتًا من السيرفر. مفتاح Gemini غير موجود داخل التطبيق.</p><button class="dng" id="sLogout">تسجيل الخروج</button></div>
+  <div class="card"><b>ملف المطابقة</b><div id="fileCard" style="margin:6px 0"></div>
+  <button class="pri" id="sFile">🔄 تحديث الملف (xlsx / csv)</button>
+  <p class="hint">التحديث بيستبدل القديم كله. تقدر كمان تشارك الملف من واتساب للتطبيق.</p>
+  <b>لصق لوحات</b><textarea id="sPaste" maxlength="2000000" placeholder="لوحة في كل سطر"></textarea><button id="sPasteGo" style="margin-top:6px">➕ إضافة للملف</button></div>
+  <div class="card"><b>المناطق</b><div id="zList" style="margin:6px 0">${zonesListHtml()}</div>
+  <textarea id="sZones" maxlength="100000" placeholder="جني — الرمال&#10;30.0, 31.0&#10;30.0, 31.1&#10;30.1, 31.1&#10;30.1, 31.0&#10;&#10;منطقة تانية&#10;…"></textarea>
+  <p class="hint">سطر الاسم وتحته 4 أسطر (خط العرض, خط الطول) وسطر فاضي بين كل منطقة. الاسم الموجود بيتحدّث.</p>
+  <div class="row"><button class="pri" id="sZApply">تطبيق</button><button id="sZDef">استرجاع الافتراضية</button><button class="dng" id="sZClear">مسح الكل</button></div></div>
+  <button style="width:100%" id="sClose">إغلاق</button>`);
+  fileCardEl = m.q('#fileCard'); refreshFileInfo().then(updateFileCard); updateFileCard();
+  m.q('#sLogout').onclick = async () => { if (await confirmDlg('تسجيل الخروج من هذا الجهاز؟', 'خروج', true)) { m.close(); await Auth.logout(); } };
+  m.q('#sFile').onclick = () => { m.close(); $('#fileIn').click(); };
+  m.q('#sPasteGo').onclick = async () => { if (await pastePlates(m.q('#sPaste').value)) m.q('#sPaste').value = ''; };
+  m.q('#sZApply').onclick = () => {
+    const r = parseZones(m.q('#sZones').value);
+    if (r.zones.length) { zones = mergeZones(zones, r.zones); LS.set('zones', zones); applyZones(); m.q('#sZones').value = ''; m.q('#zList').innerHTML = zonesListHtml(); toast(`اتطبّقت ${r.zones.length} منطقة`); }
+    if (r.errors.length) infoDlg('مشكلة في بعض المناطق', r.errors.join('\n')); else if (!r.zones.length) toast('مفيش مناطق صالحة في النص');
+  };
+  m.q('#sZDef').onclick = () => { seedZones(true); applyZones(); m.q('#zList').innerHTML = zonesListHtml(); toast('اترجعت المناطق الافتراضية'); };
+  m.q('#sZClear').onclick = async () => { if (await confirmDlg('تمسح كل المناطق؟', 'مسح', true)) { zones = []; LS.set('zones', zones); applyZones(); m.q('#zList') && (m.q('#zList').innerHTML = zonesListHtml()); } };
+  m.q('#sClose').onclick = () => m.close();
+}
+$('#btnSet').onclick = openSettings;
+$('#btnWanted').onclick = () => {
+  const w = log.filter(e => e.status === 'req').reverse();
+  const m = openModal(`<h3>⚠ اللوحات المطلوبة (${w.length})</h3>${w.map(e => `<div class="card" style="margin:6px 0">${plateHtml(e.plate)}<div class="mt">${(e.match || []).map(p => `<b>${esc(p[0])}:</b> ${esc(p[1])}`).join(' · ')}</div><div class="sub">${fmtTime(e.ts)}${e.area ? ' · ' + esc(e.area) : ''}</div></div>`).join('') || '<div class="empty">مفيش لوحات مطلوبة في السجل</div>'}<button style="width:100%;margin-top:8px" id="wOk">إغلاق</button>`);
+  m.el.querySelectorAll('.pl').forEach(x => x.style.pointerEvents = 'none'); m.q('#wOk').onclick = () => m.close();
+};
+
+/* ---------- التصدير ---------- */
+function bytesToB64(u8) { let s = ''; for (let i = 0; i < u8.length; i += 0x8000) s += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000)); return btoa(s); }
+async function fillAreas(pm) {
+  const miss = log.filter(e => e.lat != null && !e.area); const keys = [...new Set(miss.map(gk))]; let i = 0; const t0 = Date.now();
+  for (const k of keys) {
+    if (geocache[k]) { applyGeo(k, geocache[k]); continue; }
+    if (Date.now() - t0 > 60000 || !navigator.onLine) break;
+    pm.set(`بكمّل أسماء الأحياء ${++i}/${keys.length}`, 10 + 40 * i / keys.length);
+    const [lat, lng] = k.split(',').map(Number);
+    try { const n = await reverseGeocode(lat, lng); geocache[k] = n; applyGeo(k, n); } catch (e) { }
+    await sleep(1100);
+  }
+  LS.set('geo', geocache);
+}
+function buildExport() {
+  const rows = log.slice().sort((a, b) => a.n - b.n).map(e => [e.n, e.plate, e.type, STATUS_TX[e.status], fmtFull(e.ts),
+    e.lat != null ? { link: mapUrl(e.lat, e.lng), text: e.area || 'عرض على الخريطة' } : (e.area || ''),
+    e.lat != null ? e.lat.toFixed(6) + ', ' + e.lng.toFixed(6) : '', (e.match || []).map(p => p[0] + ': ' + p[1]).join(' | ')]);
+  return buildXlsx(['#', 'اللوحة', 'النوع', 'الحالة', 'الوقت', 'الموقع (الحي)', 'الإحداثيات', 'بيانات المطلوب'], rows, [6, 14, 12, 10, 20, 24, 24, 50]);
+}
+async function deliver(bytes, name, mode) {
+  const mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+  if (A) {
+    const op = mode === 'share' ? 'share' : 'save', b64 = bytesToB64(bytes);
+    const chk = r => { if (r !== 'ok') throw new Error(String(r).replace(/^err:/, '')); };
+    chk(A[op + 'Start'](name, mime));
+    for (let i = 0; i < b64.length; i += 524288) { chk(A[op + 'Chunk'](b64.slice(i, i + 524288))); await sleep(0); }
+    chk(A[op + 'End']()); if (op === 'save') toast('اتنزّل في Downloads ✓', 3500);
+    return;
+  }
+  const f = new File([bytes], name, { type: mime });
+  if (mode === 'share' && navigator.canShare && navigator.canShare({ files: [f] })) { await navigator.share({ files: [f] }); return; }
+  const a = document.createElement('a'); a.href = URL.createObjectURL(f); a.download = name; document.body.appendChild(a); a.click(); a.remove();
+}
+$('#btnExport').onclick = () => {
+  if (!log.length) { toast('السجل فاضي'); return; }
+  const m = openModal(`<h3>تصدير السجل (Excel)</h3><button class="pri choice" id="exS">📤 مشاركة (من غير تنزيل)</button><button class="choice" id="exD">⬇️ تنزيل في Downloads</button><button class="choice" id="exC">إلغاء</button>`);
+  const go = async mode => {
+    m.close(); const pm = progressModal('بجهّز ملف الإكسل…'); pm.set('بجهّز…', 5);
+    try { await fillAreas(pm); pm.set('بكتب الملف…', 70); const d = new Date(); const name = `abusabra-check-${d.getFullYear()}${pad2(d.getMonth() + 1)}${pad2(d.getDate())}-${pad2(d.getHours())}${pad2(d.getMinutes())}.xlsx`; await deliver(buildExport(), name, mode); pm.close(); }
+    catch (e) { pm.close(); if (!(e && e.name === 'AbortError')) infoDlg('فشل التصدير', (e && e.message) || 'خطأ غير معروف'); }
+  };
+  m.q('#exS').onclick = () => go('share'); m.q('#exD').onclick = () => go('save'); m.q('#exC').onclick = () => m.close();
+};
+
+/* ---------- المناطق الافتراضية (70 منطقة: الرمال + الجنادرية) ---------- */
+const DEFAULT_ZONES_TEXT = `جني — الرمال
+24.8486682, 46.8242659
+24.8524818, 46.8222529
+24.8500531, 46.8164959
+24.8468714, 46.8189672
+
+الجمعان — الرمال
+24.8499247, 46.8161700
+24.8469177, 46.8178206
+24.8445777, 46.8119690
+24.8474601, 46.8102775
+
+الشزري — الرمال
+24.8479715, 46.8347936
+24.8520063, 46.8332490
+24.8507948, 46.8289182
+24.8465410, 46.8300803
+
+يوسف — الرمال
+24.8509829, 46.8289011
+24.8547492, 46.8279952
+24.8562894, 46.8315830
+24.8521100, 46.8329291
+
+رشيد — الرمال
+24.8479548, 46.8346913
+24.8494103, 46.8382821
+24.8539774, 46.8376719
+24.8525652, 46.8331682
+
+ماما منى — الرمال
+24.8529272, 46.8333559
+24.8565894, 46.8322237
+24.8585263, 46.8369340
+24.8540641, 46.8377460
+
+باي — الرمال
+24.8434271, 46.8378677
+24.8421702, 46.8339249
+24.8466125, 46.8319229
+24.8493151, 46.8382657
+
+مرات — الرمال
+24.8434502, 46.8378479
+24.8422268, 46.8338344
+24.8357807, 46.8347419
+24.8362417, 46.8370909
+
+فاعل — الرمال
+24.8422584, 46.8339758
+24.8403161, 46.8289923
+24.8456225, 46.8266071
+24.8467628, 46.8320752
+
+نقل — الرمال
+24.8456149, 46.8393476
+24.8563847, 46.8496010
+24.8594642, 46.8478358
+24.8536540, 46.8387116
+
+للبيع — الرمال
+24.8536753, 46.8378697
+24.8586289, 46.8371563
+24.8633267, 46.8483508
+24.8596534, 46.8491162
+
+قرميد — الرمال
+24.8402175, 46.8289152
+24.8416314, 46.8340338
+24.8356846, 46.8351111
+24.8349291, 46.8303046
+
+القالي — الرمال
+24.8463451, 46.8299083
+24.8457098, 46.8260295
+24.8486768, 46.8245804
+24.8504514, 46.8290238
+
+فرعون — الرمال
+24.8507313, 46.8288377
+24.8488435, 46.8244734
+24.8525247, 46.8227307
+24.8545575, 46.8278993
+
+الساحل — الرمال
+24.8473421, 46.8103627
+24.8441509, 46.8118577
+24.8416134, 46.8062901
+24.8449498, 46.8046482
+
+الطبري — الرمال
+24.8491708, 46.8240051
+24.8469679, 46.8191546
+24.8415170, 46.8222998
+24.8429825, 46.8270554
+
+العصار — الرمال
+24.8427029, 46.8209222
+24.8397748, 46.8138033
+24.8438621, 46.8121242
+24.8472615, 46.8190185
+
+ثريا — الرمال
+24.8414482, 46.8064252
+24.8436513, 46.8113960
+24.8393905, 46.8134838
+24.8368055, 46.8087198
+
+معصوم — الرمال
+24.8353471, 46.8163789
+24.8401229, 46.8142301
+24.8373532, 46.8084268
+24.8328156, 46.8107727
+
+الكلفان — الرمال
+24.8374980, 46.8032947
+24.8392813, 46.8072654
+24.8452802, 46.8041832
+24.8435974, 46.7996315
+
+سبورت — الرمال
+24.8436775, 46.8002015
+24.8378111, 46.8035619
+24.8351126, 46.7971655
+24.8409224, 46.7942791
+
+الصلاحي — الرمال
+24.8373611, 46.7959968
+24.8354914, 46.7919738
+24.8386718, 46.7904815
+24.8406340, 46.7945863
+
+حبان — الرمال
+24.8374399, 46.7953926
+24.8355921, 46.7917012
+24.8324240, 46.7942882
+24.8337613, 46.7974143
+
+ديكور — الرمال
+24.8374270, 46.8081730
+24.8358288, 46.8036424
+24.8287811, 46.8073224
+24.8305840, 46.8116461
+
+مؤسسه — الرمال
+24.8359572, 46.8038224
+24.8288040, 46.8075313
+24.8252483, 46.7984644
+24.8309297, 46.7937350
+
+اكاديميه — الرمال
+24.8403943, 46.7859284
+24.8444931, 46.7830534
+24.8480555, 46.7906203
+24.8425858, 46.7933917
+
+سيد — الرمال
+24.8469505, 46.7912999
+24.8514316, 46.7888708
+24.8482493, 46.7811876
+24.8431310, 46.7837324
+
+اتقان — الرمال
+24.8503482, 46.8016549
+24.8587931, 46.7973275
+24.8537306, 46.7879515
+24.8463609, 46.7917163
+
+نبض — الرمال
+24.8506239, 46.8011416
+24.8467269, 46.8028743
+24.8426689, 46.7934433
+24.8449331, 46.7921964
+
+عريس — الرمال
+24.8708357, 46.8409700
+24.8647318, 46.8440381
+24.8662960, 46.8480279
+24.8729850, 46.8460884
+
+سماعات — الرمال
+24.8707688, 46.8413613
+24.8655385, 46.8449337
+24.8630195, 46.8389155
+24.8689656, 46.8360421
+
+مشعان — الرمال
+24.8779278, 46.8317888
+24.8715986, 46.8347822
+24.8765362, 46.8458299
+24.8824208, 46.8438936
+
+مزيد — الرمال
+24.8833822, 46.8446477
+24.8813271, 46.8381738
+24.8879143, 46.8354648
+24.8920198, 46.8429371
+
+انبار — الرمال
+24.8870569, 46.8345726
+24.8810825, 46.8376930
+24.8785398, 46.8312034
+24.8839163, 46.8288240
+
+استراحات — الرمال
+24.8620707, 46.8395957
+24.8862543, 46.8269223
+24.8767610, 46.8101991
+24.8543993, 46.8216253
+
+حسين — الرمال
+24.8746184, 46.8111395
+24.8651367, 46.7939516
+24.8467497, 46.8036253
+24.8545283, 46.8213242
+
+العايش — الرمال
+24.9195946, 46.8217936
+24.9260564, 46.8176774
+24.9292628, 46.8232681
+24.9243230, 46.8291827
+
+توظيف — الرمال
+24.9256925, 46.8174816
+24.9322329, 46.8130466
+24.9344846, 46.8177991
+24.9290828, 46.8237375
+
+المها — الرمال
+24.9342711, 46.7975521
+24.9383210, 46.8118111
+24.9188761, 46.8122781
+24.9158519, 46.8034295
+
+دواجن — الرمال
+24.9056760, 46.8309359
+24.8942427, 46.8085448
+24.9241768, 46.8126647
+24.9262814, 46.8172150
+
+مسك — الرمال
+24.9256386, 46.8004050
+24.9245258, 46.7948364
+24.9335533, 46.7884651
+24.9371888, 46.7964316
+
+ابو ياسر — الرمال
+24.9365802, 46.7936408
+24.9405239, 46.7914253
+24.9372326, 46.7844854
+24.9328462, 46.7868045
+
+تنال — الرمال
+24.9227985, 46.7829445
+24.9291978, 46.7792212
+24.9326333, 46.7867421
+24.9260576, 46.7900144
+
+ابو مشاري — الرمال
+24.9153775, 46.7877600
+24.9233181, 46.7826115
+24.9281190, 46.7946080
+24.9211764, 46.7990776
+
+بلك — الجنادرية
+24.8546454, 46.9022122
+24.8500972, 46.9065065
+24.8447326, 46.8961538
+24.8481723, 46.8930354
+
+شاد — الجنادرية
+24.8481723, 46.8930354
+24.8410776, 46.8996678
+24.8350919, 46.8921499
+24.8419335, 46.8847454
+
+ابوراشد — الجنادرية
+24.8334941, 46.8574693
+24.8290891, 46.8632397
+24.8354947, 46.8780077
+24.8257452, 46.8681784
+
+بلدية — الجنادرية
+24.8363804, 46.8771725
+24.8394717, 46.8730449
+24.8419569, 46.8765911
+24.8388431, 46.8795053
+
+رحمة — الجنادرية
+24.8420412, 46.8766471
+24.8420537, 46.8766642
+24.8445951, 46.8799791
+24.8419943, 46.8848171
+
+خشم — الجنادرية
+24.8430540, 46.8781109
+24.8454832, 46.8749814
+24.8471160, 46.8774179
+24.8446386, 46.8799435
+
+المدن — الجنادرية
+24.8442002, 46.8821550
+24.8472876, 46.8772358
+24.8474933, 46.8849633
+24.8508186, 46.8819183
+
+البحر — الجنادرية
+24.8508186, 46.8819183
+24.8548398, 46.8875637
+24.8516184, 46.8904273
+24.8474066, 46.8849153
+
+درة — الجنادرية
+24.8419335, 46.8847454
+24.8383146, 46.8886269
+24.8353395, 46.8850927
+24.8388812, 46.8805098
+
+سمران — الجنادرية
+24.8388812, 46.8805098
+24.8352820, 46.8848094
+24.8325025, 46.8823907
+24.8364294, 46.8772466
+
+المختار — الجنادرية
+24.8324520, 46.8824625
+24.8283268, 46.8879305
+24.8316779, 46.8899512
+24.8352559, 46.8850330
+
+خريص — الجنادرية
+24.8352559, 46.8850330
+24.8316840, 46.8898875
+24.8350919, 46.8921499
+24.8383101, 46.8886144
+
+وفر — الجنادرية
+24.8516780, 46.8901819
+24.8482946, 46.8931390
+24.8449805, 46.8887885
+24.8482889, 46.8857877
+
+دعبل — الجنادرية
+24.8449805, 46.8887885
+24.8482889, 46.8857877
+24.8440261, 46.8819465
+24.8418337, 46.8846112
+
+شلبي — الجنادرية
+24.8299913, 46.8859322
+24.8281288, 46.8884502
+24.8218779, 46.8835270
+24.8240181, 46.8803747
+
+زنكي — الجنادرية
+24.8193139, 46.8760959
+24.8162306, 46.8797259
+24.8051438, 46.8710269
+24.8086407, 46.8664161
+
+بصريات — الجنادرية
+24.8051438, 46.8710269
+24.8086407, 46.8664161
+24.8030429, 46.8697488
+24.8067854, 46.8647260
+
+مالك — الجنادرية
+24.8030429, 46.8697488
+24.8050306, 46.8670756
+24.8023496, 46.8651042
+24.8006428, 46.8678169
+
+أجداد — الجنادرية
+24.8023496, 46.8651042
+24.8006428, 46.8678169
+24.7969808, 46.8650988
+24.7989414, 46.8624331
+
+عصام — الجنادرية
+24.8006346, 46.8639750
+24.8028250, 46.8610635
+24.7965044, 46.8606762
+24.7983522, 46.8583155
+
+صخر — الجنادرية
+24.8028250, 46.8610635
+24.8006057, 46.8639448
+24.8049962, 46.8671916
+24.8069273, 46.8648598
+
+مبارك — الجنادرية
+24.8240692, 46.8804971
+24.8220827, 46.8838398
+24.8164561, 46.8795533
+24.8192451, 46.8759635
+
+الحمامة — الجنادرية
+24.8089167, 46.8666317
+24.8117929, 46.8629554
+24.8070560, 46.8585224
+24.8040646, 46.8622456
+
+محايل — الجنادرية
+24.8116240, 46.8628227
+24.8157269, 46.8574616
+24.8117455, 46.8538862
+24.8076878, 46.8592057
+
+مغربي — الجنادرية
+24.8088236, 46.8581781
+24.8042150, 46.8539603
+24.8087213, 46.8511292
+24.8118696, 46.8540481
+
+بلال — الجنادرية
+24.8040025, 46.8623174
+24.8080204, 46.8572148
+24.8044207, 46.8538145
+24.7986048, 46.8576460`;
+function seedZones(force) {
+  if (!force && LS.get('zonesSeeded', false)) return;
+  zones = mergeZones(zones, parseZones(DEFAULT_ZONES_TEXT).zones);
+  LS.set('zones', zones); LS.set('zonesSeeded', true);
+}
+
+/* ---------- تنقل وثيم وتشغيل ---------- */
+$$('#nav button').forEach(b => b.onclick = () => showTab(b.dataset.tab));
+function applyTheme() { document.documentElement.dataset.theme = settings.theme; $('#btnTheme').textContent = settings.theme === 'dark' ? '🌙' : '☀️'; const mc = document.querySelector('meta[name=theme-color]'); if (mc) mc.content = settings.theme === 'dark' ? '#06100c' : '#f1f7f3'; }
+$('#btnTheme').onclick = () => { settings.theme = settings.theme === 'dark' ? 'light' : 'dark'; saveSettings(); applyTheme(); };
+(async function init() {
+  const authenticated = await Auth.init();
+  seedZones(false);
+  applyTheme(); $$('#modeSeg button').forEach(x => x.classList.toggle('on', x.dataset.mode === settings.mode));
+  applyZones(); renderNow(); updLocBtn();
+  await refreshFileInfo();
+  setTimeout(() => $('#splash').classList.add('hide'), 1300);
+  setTimeout(handleShared, 1500);
+  if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => { });
+})();
+
+</script>
+</body>
+</html>
