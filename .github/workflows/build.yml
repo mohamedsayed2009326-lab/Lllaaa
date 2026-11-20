@@ -1,5 +1,5 @@
 
-name: Abu Sabra Android APK
+name: Abu Sabra APK Builder
 
 on:
   workflow_dispatch:
@@ -24,43 +24,39 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Extract ZIP
+      - name: Locate Android Project
         run: |
-          mkdir -p extracted
-
-          ZIP_FILE=$(find . -type f -iname "*.zip" \
+          GRADLE_FILE=$(find . -type f \
+            \( -name build.gradle -o -name build.gradle.kts \) \
             -not -path "./.git/*" | head -n 1)
 
-          if [ -n "$ZIP_FILE" ]; then
-            unzip -q "$ZIP_FILE" -d extracted
-          else
-            echo "No ZIP found"
-            exit 1
-          fi
-
-      - name: Locate Gradle Project
-        run: |
-          GRADLE_FILE=$(find extracted -type f -name gradlew | head -n 1)
-
           if [ -z "$GRADLE_FILE" ]; then
-            echo "gradlew not found"
+            echo "Android Gradle project not found"
+            find . -maxdepth 4 -type f | head -n 200
             exit 1
           fi
 
           PROJECT_DIR=$(dirname "$GRADLE_FILE")
-          echo "PROJECT_DIR=$PROJECT_DIR" >> "$GITHUB_ENV"
 
-          chmod +x "$GRADLE_FILE"
+          while [ "$PROJECT_DIR" != "." ] && \
+            [ ! -f "$PROJECT_DIR/settings.gradle" ] && \
+            [ ! -f "$PROJECT_DIR/settings.gradle.kts" ]; do
+            PROJECT_DIR=$(dirname "$PROJECT_DIR")
+          done
+
+          echo "PROJECT_DIR=$PROJECT_DIR" >> "$GITHUB_ENV"
+          echo "Project: $PROJECT_DIR"
 
       - name: Build APK
         run: |
           cd "$PROJECT_DIR"
-          ./gradlew assembleDebug --no-daemon
+          gradle assembleDebug --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: Abu-Sabra-APK
-          path: extracted/**/build/outputs/apk/debug/*.apk
+          path: |
+            **/build/outputs/apk/debug/*.apk
           if-no-files-found: error
           retention-days: 7
