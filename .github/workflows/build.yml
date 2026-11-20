@@ -1,74 +1,66 @@
-name: Build secure APK
+
+name: Abu Sabra Android APK
 
 on:
-  push:
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Prepare project directory
-        run: |
-          if [ -f settings.gradle.kts ]; then
-            echo 'PROJ_DIR=.' >> "$GITHUB_ENV"
-          else
-            ZIP_FILE=$(find . -maxdepth 1 -type f -name '*.zip' | head -n 1)
-            test -n "$ZIP_FILE" || (echo 'Project files or a project ZIP were not found in repository root.' && exit 1)
-            mkdir -p _project
-            unzip -q -o "$ZIP_FILE" -d _project
-            SETTINGS=$(find _project -name settings.gradle.kts -type f | head -n 1)
-            test -n "$SETTINGS" || (echo 'settings.gradle.kts not found inside ZIP.' && exit 1)
-            echo "PROJ_DIR=$(dirname "$SETTINGS")" >> "$GITHUB_ENV"
-          fi
-
-      - uses: actions/setup-java@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
 
-      - uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: '8.9'
-
-      - name: Check release signing secrets and prepare keystore
-        env:
-          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
-          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
-          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+      - name: Extract ZIP
         run: |
-          test -n "$ANDROID_KEYSTORE_BASE64" || (echo 'Missing GitHub Secret: ANDROID_KEYSTORE_BASE64' && exit 1)
-          test -n "$ANDROID_KEYSTORE_PASSWORD" || (echo 'Missing GitHub Secret: ANDROID_KEYSTORE_PASSWORD' && exit 1)
-          test -n "$ANDROID_KEY_ALIAS" || (echo 'Missing GitHub Secret: ANDROID_KEY_ALIAS' && exit 1)
-          test -n "$ANDROID_KEY_PASSWORD" || (echo 'Missing GitHub Secret: ANDROID_KEY_PASSWORD' && exit 1)
-          echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > "${PROJ_DIR}/app/release.keystore"
-          echo "ANDROID_KEYSTORE_PATH=$GITHUB_WORKSPACE/${PROJ_DIR}/app/release.keystore" >> "$GITHUB_ENV"
+          mkdir -p extracted
 
-      - name: Build signed Release APK
-        env:
-          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
-          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-        run: gradle -p "$PROJ_DIR" :app:assembleRelease --no-daemon --stacktrace
+          ZIP_FILE=$(find . -type f -iname "*.zip" \
+            -not -path "./.git/*" | head -n 1)
 
-      - name: Collect APK
+          if [ -n "$ZIP_FILE" ]; then
+            unzip -q "$ZIP_FILE" -d extracted
+          else
+            echo "No ZIP found"
+            exit 1
+          fi
+
+      - name: Locate Gradle Project
         run: |
-          mkdir -p out
-          cp "${PROJ_DIR}/app/build/outputs/apk/release/app-release.apk" out/AbuAlSayed-secure.apk
+          GRADLE_FILE=$(find extracted -type f -name gradlew | head -n 1)
 
-      - uses: actions/upload-artifact@v4
-        with:
-          name: AbuAlSayed-secure-apk
-          path: out/AbuAlSayed-secure.apk
+          if [ -z "$GRADLE_FILE" ]; then
+            echo "gradlew not found"
+            exit 1
+          fi
 
-      - uses: softprops/action-gh-release@v2
+          PROJECT_DIR=$(dirname "$GRADLE_FILE")
+          echo "PROJECT_DIR=$PROJECT_DIR" >> "$GITHUB_ENV"
+
+          chmod +x "$GRADLE_FILE"
+
+      - name: Build APK
+        run: |
+          cd "$PROJECT_DIR"
+          ./gradlew assembleDebug --no-daemon
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
         with:
-          tag_name: secure-${{ github.run_number }}
-          name: ابو السيد — إصدار آمن ${{ github.run_number }}
-          files: out/AbuAlSayed-secure.apk
+          name: Abu-Sabra-APK
+          path: extracted/**/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+          retention-days: 7
