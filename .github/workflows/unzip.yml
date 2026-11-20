@@ -1,0 +1,50 @@
+name: Unzip project
+
+on:
+  workflow_dispatch:
+  push:
+    paths: ['*.zip']
+
+permissions:
+  contents: write
+
+jobs:
+  unzip:
+    runs-on: ubuntu-latest
+    env:
+      PAT: ${{ secrets.PAT_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT_TOKEN || github.token }}
+
+      - name: Unzip
+        run: |
+          ZIP=$(ls -t *.zip 2>/dev/null | head -n 1)
+          test -n "$ZIP" || { echo "no zip found"; exit 1; }
+          rm -rf _x && mkdir _x
+          unzip -q -o "$ZIP" -d _x
+          if [ "$(ls -A _x | wc -l)" = "1" ] && [ -d "_x/$(ls _x)" ]; then
+            SRC="_x/$(ls _x)"
+          else
+            SRC=_x
+          fi
+          if [ -n "$PAT" ]; then
+            rsync -a "$SRC"/ ./
+          else
+            rsync -a --exclude='.github/' "$SRC"/ ./
+            if [ -f "$SRC/.github/workflows/build.yml" ]; then
+              mkdir -p workflow-to-add
+              cp "$SRC/.github/workflows/build.yml" workflow-to-add/build.yml.txt
+            fi
+          fi
+          rm -rf _x "$ZIP"
+
+      - name: Commit
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet && { echo "nothing to commit"; exit 0; }
+          git commit -m "Unzip project"
+          git push
